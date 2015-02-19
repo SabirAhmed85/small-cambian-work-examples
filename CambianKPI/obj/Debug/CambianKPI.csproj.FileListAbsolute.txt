@@ -1,6 +1,0 @@
-C:\Dev\ActiveCareForms\CambianKPI\bin\CambianKPI.dll
-C:\Dev\ActiveCareForms\CambianKPI\bin\CambianKPI.pdb
-C:\Dev\ActiveCareForms\CambianKPI\bin\EntityFramework.xml
-C:\Dev\ActiveCareForms\CambianKPI\obj\Debug\CambianKPI.csprojResolveAssemblyReference.cache
-C:\Dev\ActiveCareForms\CambianKPI\obj\Debug\CambianKPI.dll
-C:\Dev\ActiveCareForms\CambianKPI\obj\Debug\CambianKPI.pdb
