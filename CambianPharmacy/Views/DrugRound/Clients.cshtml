@@ -1,0 +1,46 @@
+﻿@model List<CambianPharmacy.ViewModels.DrugRoundClientVM>
+<div class="wrapper drug-round">
+    <div class="header-panel">
+        <div class="status">
+            @Model.Count() patients
+            <span class="divider">|</span> 
+            @Model.Where(c => c.ClientComplete).Count() done
+            <span class='divider'>|</span>
+            @Model.Where(c => c.ClientIncomplete).Count() to do
+        </div>
+        Drug Round @(ViewBag.Hour.ToString("00")):00
+    </div>
+    <ul class="patient-list">
+    @foreach (var client in Model)
+    {
+        string path = @ViewBag.Path + "/" + client.CambianClientID.ToString() + "-120.jpg";
+        //string mappedPath = HttpContext.Current.Server.MapPath(path);
+       
+        <a href="#/Client/DueAtTime/@client.CambianClientID/@ViewBag.Hour">
+            <li @(client.ClientComplete ? "class=gray-scale-background" : "")>
+                @{
+                    //Check if the file exists, checking if the URL gives a response
+                    HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(path);
+                    request.UseDefaultCredentials = true; 
+                    request.PreAuthenticate = true;
+                    try
+                    {
+                        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                        {
+                            if (request.HaveResponse)
+                            {
+                            <img src='@(path)' @(client.ClientComplete ? "class=gray-scale" : "") />                            
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        <img src="/Content/headshot_120.jpg" @(client.ClientComplete ? "class=gray-scale" : "") />
+                    }
+                }                    
+                @client.FullName
+            </li>
+        </a>
+    }
+    </ul>
+</div>

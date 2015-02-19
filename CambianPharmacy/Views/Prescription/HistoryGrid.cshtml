@@ -1,0 +1,745 @@
+﻿@model ActiveCareForms.Models.Prescription
+@{
+    var allDoses = Model.Schedules.SelectMany(s => s.Doses).Select(d => new
+        {
+            DoseID = d.DoseID.ToString(),
+            RecordedDate = d.RecordedDateTime.ToString("dd/MM/yyyy"),
+            RecordedByUserID = d.RecordedByUser.Fullname,
+            ResultCode = d.ResultCode.ToString(),
+            Hour = d.Schedule.Hour.ToString(),
+            Frequency = d.Schedule.Frequency.ToString(),
+            ScheduleID = d.ScheduleID.ToString()
+        }).ToArray();
+}
+    <div class="wrapper patient-dose">
+        <div class="header-panel">
+            @Model.Client.FullName
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model.Client)
+
+        <script type="text/javascript">
+
+            parentPrescriptionArray = @Html.Raw(Json.Encode(allDoses));
+
+        </script>
+
+        <script type="text/javascript">
+            //This function is common to both scenarios, but there is a bit extra
+            //at the bottom for AddEditTitration
+
+            if (parentPrescriptionArray.length > 0) {
+                var datesArray = new Array ();
+
+                for (a = 0; a < parentPrescriptionArray.length; a++) {
+                    d = parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 4, 2);
+                    d = parseInt(d);
+                    m = parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 6, 2);
+                    m = parseInt(m) - 1;
+                    y = parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 10, 4);
+                    y = parseInt(y);
+                    datesArray.push(new Date(y, m, d));
+                }
+
+                var date_sort_asc = function (date1, date2) {
+                    if (date1 > date2) return 1;
+                    if (date1 < date2) return -1;
+                    return 0;
+                };
+
+                // First let's sort the array in ascending order.
+                datesArray.sort(date_sort_asc);
+
+                firstDate = datesArray[0];
+
+                //This bit is exclusive to the HistoryGrid only
+
+                lastDate = datesArray[datesArray.length - 1];
+
+                    //Finding out date-range and no. of days between the Start and Stop Date that we need to build grid for
+
+                startdd = firstDate.getDate();
+                startmm = firstDate.getMonth() + 1;
+                startyyyy = firstDate.getFullYear();
+
+                stopdd = lastDate.getDate();
+                stopmm = lastDate.getMonth() + 1;
+                stopyyyy = lastDate.getFullYear();
+
+                    //Defining some initial variables
+
+                var numberOfDays = 0,
+                    monthArray =
+                            [
+                                ['Jan', 31, 01],
+                                ['Feb', 28, 02],
+                                ['Mar', 31, 03],
+                                ['Apr', 30, 04],
+                                ['May', 31, 05],
+                                ['Jun', 30, 06],
+                                ['Jul', 31, 07],
+                                ['Aug', 31, 08],
+                                ['Sept', 30, 09],
+                                ['Oct', 31, 10],
+                                ['Nov', 30, 11],
+                                ['Dec', 31, 12]
+                            ];
+
+                if (stopyyyy != startyyyy) {
+                    numberOfDays = 365 * ((stopyyyy - startyyyy) - 1);
+                    for (a = startyyyy + 1; a < stopyyyy; a++) {
+                        if (a % 4 == 0 && a % 100 != 0) {
+                            numberOfDays++;
+                        }
+                    }
+                }
+
+                function calculateDaysBasedOnMonth(thismm, thisyyyy, firstdd) {
+                    if (thismm != stopmm - 1 || thisyyyy != stopyyyy) {
+                        thisNum = 0;
+                        numberOfDays += monthArray[thismm][1];
+                        thisNum += monthArray[thismm][1];
+                        if (thismm == 1 && thisyyyy % 4 == 0) {
+                            numberOfDays++;
+                            thisNum ++;
+                        }
+                    }
+
+                    if (thismm == 11) {
+                        thismm = -1;
+                        thisyyyy = stopyyyy;
+                    }
+
+                    if (thismm == stopmm - 1 && thisyyyy == stopyyyy) {
+                        if (monthArray[startmm - 1][0] == 'Feb') {
+                            numberOfDays += monthArray[startmm - 1][1] + 1 - startdd + 1;
+                        }
+                        else {
+                            numberOfDays += monthArray[startmm - 1][1] - startdd + 1;
+                        }
+                        numberOfDays += stopdd;
+                    }
+                    else {
+                        thismm++;
+                        calculateDaysBasedOnMonth(thismm, thisyyyy, firstdd);
+                    }
+
+                }
+
+                if (stopmm != startmm) {
+                    //calculate numer of days based on month
+                    calculateDaysBasedOnMonth(startmm, startyyyy, startdd);
+                }
+                else {
+                    //different way of calculating number of days if they are in same month
+                    
+                    if (stopyyyy == startyyyy) {
+                        numberOfDays += stopdd - startdd + 1;
+                    }
+                    else {
+                        calculateDaysBasedOnMonth(startmm, startyyyy, startdd);
+                    }
+                }
+                //
+            }
+        </script>
+        
+        <div class="patient-dose-panel @Model.PrescriptionType.PrescriptionTypeName.ToLower()">
+            <p class="dose-header">@Model.PrescriptionType.PrescriptionTypeName Prescription</p>
+            <p class="dose-title">@Model.MedicationVTM.Name <span class="dose-title3">@Model.DoseSize.ToString("0.##")@Model.MedicationUnit.Description @Model.MedicationRoute.Description</span></p>
+            <div id="regular-medication-table" class="view">
+              <div id="regular-medication-table-header">
+                <div id="topleft1">
+                  <div id="date">
+                    Date
+                  </div>
+                  <div id="start-date">
+                    Start Date
+  <p>@Model.StartDate.ToString("dd/MM/yyyy")</p>
+                  </div>
+                  <div id="time">
+                    Time
+                  </div>
+                </div>
+                <div id="topleft2">
+                  <div id="route">
+                    <label>Route</label>
+  <p>@Model.MedicationRoute.Description</p>
+                  </div>
+                  <div id="stop-date">
+                    <span class="date">
+                        Stop Date
+                    </span>
+                    <span id="initial">
+                        Initial
+                    </span>
+                  </div>
+                  <div id="dose">
+                    Dose
+                  </div>
+                </div>
+                <div id="medicine">
+                    <label>MEDICINE (Approved Name)</label>
+  <p>@Model.MedicationVTM.Name</p>
+                </div>
+                <div id="form">
+                    <label>Form</label>
+  <p>@Model.MedicationForm.Description</p>
+                </div>
+                <div id="prescribers-sig">
+                    <label>Prescriber's Signature</label>
+  <p>@Model.PrescribedBy.Fullname</p>
+                </div>
+              </div>
+              
+              <div id="time-and-dose-labels">
+                <div class="empty-time-div">           
+                </div>
+                <div class="empty-dose-div">
+                </div>
+                <div class="empty-time-div">           
+                </div>
+                <div class="empty-dose-div">
+                </div>
+                <div class="empty-time-div">         
+                </div>
+                <div class="empty-dose-div">    
+                </div>
+                <div class="empty-time-div">           
+                </div>
+                <div class="empty-dose-div">
+                </div>
+              </div>
+
+              <div style="width: 98.65%; overflow-x: scroll; position: relative; height: 254px; display: block; overflow-y: hidden; border-right: 1px solid #007fff;">
+                  <div class="reg-med-data-row dates top">
+                    <div id="toprow-month-row">
+                        <div class="toprow-month-div first">     
+                        </div>
+                    </div>
+                    
+                    <div class="empty-item-row1">
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row2">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row3">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="reg-med-data-row doses">
+                    <div class="empty-item-row1">
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row2">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row3">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="reg-med-data-row doses">
+                    <div class="empty-item-row1">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row2">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row3">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="reg-med-data-row doses">
+                    <div class="empty-item-row1">
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row2">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row3">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="reg-med-data-row doses last">
+                    <div class="empty-item-row1">
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box"></div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row2">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                    <div class="empty-item-row3">
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box">
+                        </div>
+                        <div class="empty-small-box last">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    if (parentPrescriptionArray.length > 0) {
+
+                        // This is preliminary Data which can be used in both functions
+
+                        hourArray = [9, 13, 17, 21];
+
+                        //
+
+                        //ONLY for the History Grid
+
+                        secondHourArray = [];
+
+                        for (a = 0; a < parentPrescriptionArray.length; a++) {
+                            if (secondHourArray.indexOf(parentPrescriptionArray[a].Hour) == -1) {
+                                secondHourArray.push(parentPrescriptionArray[a].Hour);
+                            }
+                        }
+
+                        $('.empty-dose-div').each(function (index) {
+                            for (a = 0; a < parentPrescriptionArray.length; a++) {
+                                if (parentPrescriptionArray[a].Hour == secondHourArray[index]) {
+                                    $(this).html('@Model.DoseSize.ToString("0.##") @Model.MedicationUnit.Description');
+                                    thisHour = parentPrescriptionArray[a].Hour;
+                                    if (thisHour < 10) {
+                                        thisHour = '0' + thisHour;
+                                    }
+                                    $('.empty-time-div').eq(index).html(thisHour + ':00');
+                                }
+                            }
+                        });
+
+                        //
+
+                        // This Can be put into One function (i.e. calculate date function)
+
+                        dd = firstDate.getDate();
+                        if (dd < 10) {
+                            dd = '0' + dd;
+                        }
+
+                        mm = firstDate.getMonth() + 1;
+                        if (mm < 10) {
+                            mm = '0' + mm;
+                        }
+
+                        yyyy = firstDate.getFullYear();
+
+                        dd = parseInt(dd);
+                        mm = parseInt(mm);
+                        yyyy = parseInt(yyyy);
+
+
+                        //
+
+
+                        // This entire function below applies to Both scenarios, 
+                        // however there are some extra bits in the other
+
+                        dayToEnter = parseInt(dd),
+                        thisMonthLastDate = monthArray[(mm - 1)][1];
+                        if (mm == 2 && yyyy % 4 == 0 && yyyy % 100 != 0) {
+                            thisMonthLastDate = 29;
+                        }
+                        individualWeekBlockCounter = 0,
+                        monthToEnter = parseInt(mm),
+                        yearToEnter = parseInt(yyyy);
+
+                        var checkDateSettings = function (checkType, monthArrayVariable, dayToEnter, monthToEnter, yearToEnter) {
+                            dayToEnter = 1;
+                            monthToEnter++;
+
+                            if (monthToEnter == monthArrayVariable) {
+                                monthToEnter = monthArrayVariable - 12;
+                                yearToEnter++;
+                            }
+
+                            if (checkType == 'nonDateRow') {
+                                thisMonthLastDate = monthArray[monthToEnter][1];
+                            }
+                            else {
+                                thisMonthLastDate = monthArray[(monthToEnter - 1)][1];
+                            }
+
+                            if (monthToEnter == monthArrayVariable - 11 && yearToEnter % 4 == 0) {
+                                thisMonthLastDate = 29;
+                            }
+
+                            return {
+                                day: dayToEnter,
+                                month: monthToEnter,
+                                year: yearToEnter
+                            };
+                        }
+
+                        function arrangeCellDates(cellType) {
+                            dayToEnter++;
+
+                            if (dayToEnter > thisMonthLastDate) {
+                                var checkDates = checkDateSettings('dateRow', 13, dayToEnter, monthToEnter, yearToEnter);
+                                dayToEnter = checkDates.day;
+                                monthToEnter = checkDates.month;
+                                yearToEnter = checkDates.year;
+
+                                if (monthToEnter != stopmm || yearToEnter != stopyyyy) {
+                                    widthCalc = ((thisMonthLastDate * 54.5) - 1);
+                                }
+                                else {
+                                    widthCalc = (((stopdd) * 54.5) - 1);
+                                }
+
+                                if (widthCalc > 56) {
+                                    monthLabelString = monthArray[(monthToEnter - 1)][0] + ' ' + yearToEnter;
+                                }
+                                else {
+                                    monthLabelString = monthArray[(monthToEnter - 1)][0];
+                                }
+
+                                if (day < numberOfDays) {
+                                    $('<div></div>').addClass('toprow-month-div').css('width', widthCalc + 'px').html('<p>' + monthLabelString + '</p>').appendTo('#toprow-month-row');
+                                }
+                            }
+                        }
+
+                        for (day = 1; day < numberOfDays + 1; day++) {
+                            if (monthToEnter == 2 && yearToEnter % 4 == 0) {
+                                thisMonthLastDate = 29;
+                            }
+                            if (day == 1) {
+                                if ((thisMonthLastDate - dayToEnter) > numberOfDays) {
+                                    $('#toprow-month-row').find('.toprow-month-div').css('width', (((numberOfDays) * 54.5) - 1) + 'px');
+                                }
+                                else {
+                                    $('#toprow-month-row').find('.toprow-month-div').css('width', (((thisMonthLastDate - dayToEnter + 1) * 54.5) - 1) + 'px');
+                                }
+
+                                if ($('.toprow-month-div').width() > 56) {
+                                    $('<p></p>').html(monthArray[mm - 1][0] + ' ' + yyyy).appendTo('.toprow-month-div');
+                                }
+                                else {
+                                    $('<p></p>').html(monthArray[mm - 1][0]).appendTo('.toprow-month-div');
+                                }
+                            }
+                            if (day < 22) {
+                                $('.dates').find('.empty-small-box').eq(day - 1).each(function (index) {
+                                    $(this).html(dayToEnter);
+
+                                    arrangeCellDates('initialCell');
+                                });
+                            }
+                            else {
+                                if (individualWeekBlockCounter == 0) {
+                                    thisWeekBlockCounter = $('<div></div>').addClass('empty-item-row').appendTo($('.dates'));
+                                }
+                                $('<div></div>').addClass('empty-small-box').html(dayToEnter).appendTo(thisWeekBlockCounter);
+
+                                arrangeCellDates('generatedCell');
+
+                                individualWeekBlockCounter++;
+                                if (individualWeekBlockCounter > 6) {
+                                    individualWeekBlockCounter = 0;
+                                }
+                            }
+                        }
+
+                        //
+                        remainingDaysInThisMonth = monthArray[mm - 1][1] - dayToEnter;
+
+                        $('.reg-med-data-row').each(function (firstIndex) {
+                            if (!$(this).hasClass("top")) {
+                                var thisRow = $(this),
+                                dayToEnter = parseInt(dd),
+                                dayToShow = dayToEnter,
+                                monthToEnter = mm - 1,
+                                yearToEnter = parseInt(yyyy),
+                                thisIndex = firstIndex,
+                                individualWeekBlockCounter = 0;
+                                thisMonthLastDate = monthArray[(mm - 1)][1];
+                                if (dayToShow < 10) {
+                                    dayToShow = '0' + dayToShow;
+                                }
+                                if (monthToEnter == 1 && yearToEnter % 4 == 0) {
+                                    thisMonthLastDate = 29;
+                                }
+                                monthToShow = monthToEnter + 1;
+                                if (monthToShow < 10) {
+                                    monthToShow = '0' + monthToShow;
+                                }
+
+                                function arrangeCellDoses(cellType) {
+
+                                    if (dayToEnter > thisMonthLastDate) {
+                                        var checkDates = checkDateSettings('nonDateRow', 12, dayToEnter, monthToEnter, yearToEnter);
+                                        dayToEnter = checkDates.day;
+                                        monthToEnter = checkDates.month;
+                                        yearToEnter = checkDates.year;
+
+                                        monthToShow = monthToEnter + 1;
+                                        if (monthToShow < 10) {
+                                            monthToShow = '0' + monthToShow;
+                                        }
+                                    }
+
+                                    if (dayToEnter < 10) {
+                                        dayToEnter = '0' + dayToEnter;
+                                    }
+
+                                    if (cellType == 'generatedCell') {
+                                        thisCell = $('<div></div>').addClass('empty-small-box').attr({ 'date-day': dayToEnter, 'date-month': monthToShow, 'date-year': yearToEnter }).appendTo(thisWeekBlockCounter);
+                                    }
+                                    else {
+                                        thisCell.attr({ 'date-day': dayToEnter, 'date-month': monthToShow, 'date-year': yearToEnter });
+                                    }
+
+                                    dayToEnter++;
+                                    thisCell = "";
+                                }
+
+                                for (day = 1; day < numberOfDays + 1; day++) {
+                                    if (day < 22) {
+                                        thisRow.find('.empty-small-box').eq(day - 1).each(function (secondIndex) {
+                                            thisCell = $(this);
+                                            arrangeCellDoses('initialCell');
+                                        });
+                                    }
+                                    else {
+                                        if (individualWeekBlockCounter == 0) {
+                                            thisWeekBlockCounter = $('<div></div>').addClass('empty-item-row').appendTo(thisRow);
+                                        }
+
+                                        arrangeCellDoses('generatedCell');
+
+                                        individualWeekBlockCounter++;
+                                        if (individualWeekBlockCounter > 6) {
+                                            individualWeekBlockCounter = 0;
+                                        }
+                                    }
+                                }
+
+                            }
+                            thisRow = "";
+                        });
+
+                        firstTopVal = 0;
+                        $('.reg-med-data-row').each(function (index) {
+                            if (numberOfDays > 22) {
+                                $(this).css({ 'width': $('#time-and-dose-labels').width() + 50 + ((numberOfDays) * 54.8) + 'px' });
+                            }
+                            else {
+                                $(this).css({ 'width': 1600 + 'px' });
+                            }
+                            $(this).css({ 'top': firstTopVal + 'px' });
+                            if (index == 0) {
+                                firstTopVal += 70;
+                            }
+                            else {
+                                firstTopVal += 40;
+                            }
+                        });
+                        $('.empty-item-row1, .toprow-month-div.first').css('margin-left', $('#time-and-dose-labels').width() + 10 + 'px');
+
+                        for (a = 0; a < parentPrescriptionArray.length; a++) {
+                            thisCell = $('.reg-med-data-row').eq(secondHourArray.indexOf(parentPrescriptionArray[a].Hour) + 1).find('.empty-small-box[date-day=' + parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 4, 2) + '][date-month=' + parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 6, 2) + '][date-year=' + parentPrescriptionArray[a].DoseID.substr(parentPrescriptionArray[a].DoseID.length - 10, 4) + ']');
+                            if (parentPrescriptionArray[a].ResultCode == 100) {
+                                parentPrescriptionArray[a].RecordedByUserID = parentPrescriptionArray[a].RecordedByUserID.split(" ");
+                                initialString = "";
+                                for (b = 0; b < parentPrescriptionArray[a].RecordedByUserID.length; b++) {
+                                    initialString += parentPrescriptionArray[a].RecordedByUserID[b][0];
+                                }
+                                thisCell.html(initialString);
+                            }
+                            else {
+                                thisCell.html(parentPrescriptionArray[a].ResultCode);
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+        <div class="clearfix"></div>
+    </div>

@@ -1,0 +1,40 @@
+﻿@model List<CambianPharmacy.ViewModels.DrugRoundVM>
+    <div class="wrapper dashboard">
+            <div class="header-panel">
+                <div class="cambian-logo"><img src="/Content/cambian_logo_white_42px.png" alt="Cambian Group Logo" /></div>
+                St. Augustines
+            </div>
+            <ul class="button-list drug-rounds">
+            @foreach (var round in Model.Where(r => r.Hour > 0))
+            {
+                <a href="#/DrugRound/Clients/@round.Hour"><li@Html.Raw((round.RoundComplete ? " class=\"complete\"" : ""))>
+                @if(round.RoundComplete)
+                {
+                    <div class="indicator"><img src="/Content/tick40.png" alt="green tick" /></div>
+                }
+                    <div class="status">
+                        @round.Clients patients
+                    @if (round.ClientsIncomplete > 0)
+                    {
+                    <span class="divider">|</span> @round.ClientsIncomplete <text>to do</text>
+                    }
+                    @if (round.ClientsComplete > 0)
+                    {
+                    <span class="divider">|</span> @round.ClientsComplete <text>done</text>
+                    }
+                    </div>
+                    Drug Round @round.Hour.ToString("00"):00</li></a>
+            }
+            </ul>
+    </div>
+@*    <div class="lower-container dashboard"><div class="lower-panel">
+        <ul class="button-list special">
+            <a href="#/Site/PRNMedsClients/0"><li class="prn">PRN</li></a>
+            <a href="#/Site/AllClients/0"><li class="all-patients">All Patients</li></a>
+        </ul>
+        <ul class="button-list dailies">
+            <a href="#/Site/DepotMedsClients/0"><li class="depot"><div class="status">2 patients <span class="divider">|</span> 1 done <span class="divider">|</span> 1 to do</div>Depot</li></a>
+            <a href="#/Site/OneOffMedsClients/0"><li class="one-offs"><div class="status">None today</div>One Offs</li></a>
+        </ul>*@
+        <div class="clearfix"></div></div>
+    </div>

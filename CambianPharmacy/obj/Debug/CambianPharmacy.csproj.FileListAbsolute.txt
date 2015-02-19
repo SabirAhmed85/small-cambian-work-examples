@@ -1,0 +1,12 @@
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\CambianPharmacy.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\CambianPharmacy.pdb
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\ActiveCareForms.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\Elmah.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\WebActivator.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\Elmah.Mvc.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\ActiveCareForms.pdb
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\EntityFramework.xml
+C:\Dev\ActiveCareForms\CambianPharmacy\obj\Debug\CambianPharmacy.csprojResolveAssemblyReference.cache
+C:\Dev\ActiveCareForms\CambianPharmacy\obj\Debug\CambianPharmacy.dll
+C:\Dev\ActiveCareForms\CambianPharmacy\obj\Debug\CambianPharmacy.pdb
+C:\Dev\ActiveCareForms\CambianPharmacy\bin\EntityFramework.dll

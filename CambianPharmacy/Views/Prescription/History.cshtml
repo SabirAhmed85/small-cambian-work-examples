@@ -1,0 +1,106 @@
+﻿@model ActiveCareForms.Models.Prescription
+@{
+    var allDoses = Model.Schedules.SelectMany(s => s.Doses);
+}
+    <div class="wrapper patient-dose">
+        <div class="header-panel">
+            @Model.Client.FullName
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model.Client)
+
+        <div class="patient-dose-panel @Model.PrescriptionType.PrescriptionTypeName.ToLower()">
+            <p class="dose-header">@Model.PrescriptionType.PrescriptionTypeName Prescription</p>
+            <p class="dose-title">@Model.MedicationVTM.Name <span class="dose-title3">@Model.DoseSize.ToString("0.##")@Model.MedicationUnit.Description @Model.MedicationRoute.Description</span></p>
+            <a href="#/Prescription/HistoryGrid/@Model.PrescriptionID" id="regular-medication-table-button" class="dose-buttons view main">Grid</a>
+            <a href="#/Prescription/History/@Model.PrescriptionID" id="regular-medication-table-button" class="dose-buttons view rmt" style="display: none;">Table</a>
+            <div class="prescription-table view main">
+                <div class="prescription-header prescription-row">
+                    <span>Date</span>
+                    <span class="medium-width-span">Time</span>
+                    <span class="medium-width-span">Dose</span>
+                    <span class="name">Nurse</span>
+                    <span class="result">Result</span>
+                </div>
+                                        
+                <div id="prescription-outer-view">
+                    <div id="prescription-inner-view">
+                        @{
+                            var doses = allDoses.OrderByDescending(D => D.RecordedDateTime);
+                        }
+                        @foreach (var d in doses)
+                        {
+                            var relatedSchedule = Model.Schedules.Where(s => s.PrescriptionScheduleID == @d.ScheduleID).ToList()[0];
+                            <div class="prescription-row">
+                                <span>@d.RecordedDateTime.ToString("dd/MM/yyyy")</span>
+                                <span class="medium-width-span">@d.RecordedDateTime.ToString("HH:mm")</span>
+                                <span class="medium-width-span">@d.DoseUnits @Model.MedicationUnit.Description</span>
+                                <span class="name">@d.RecordedByUser.Fullname</span>
+                                <span class="result">@d.DoseResult.Description</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <ul class="prescription-nav">
+                    <li><a href="#" id="prev"><img src="/Content/uparrow.png" /></a></li>
+                    <li><a href="#" id="next"><img src="/Content/downarrow.png" /></a></li>
+                </ul>
+            </div>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <script>
+        $(function () {
+            var totalRows = 0,
+                totalScreens = 0,
+                topVal = 0,
+                currentScreen = 1,
+                prevButton = $('ul.prescription-nav a#prev'),
+                nextButton = $('ul.prescription-nav a#next'),
+                mainInnerView = $('.prescription-table #prescription-inner-view');
+
+            function checkForTableScrollerButtons() {
+
+                $('.prescription-table #prescription-inner-view .prescription-row').each(function () {
+                    totalRows += 1;
+                });
+                totalScreens = totalRows / 6,
+                totalScreens = Math.ceil(totalScreens);
+                if (totalScreens > 1) {
+                    nextButton.show();
+                }
+            }
+
+            checkForTableScrollerButtons();
+
+            function buttonCheck(thisScreen) {
+                if (thisScreen > 1) {
+                    prevButton.show();
+                } else {
+                    prevButton.hide();
+                }
+
+                if (thisScreen < totalScreens) {
+                    nextButton.show();
+                } else {
+                    nextButton.hide();
+                }
+            }
+
+            $('ul.prescription-nav a').click(function (e) {
+                e.preventDefault();
+                if ($(this).attr('id') == "next" && currentScreen < totalScreens) {
+                    topVal -= 210;
+                    currentScreen += 1;
+                } else if ($(this).attr('id') == "prev" && currentScreen > 1) {
+                    topVal += 210;
+                    currentScreen -= 1;
+                }
+                mainInnerView.animate({ 'top': topVal + 'px' }, function () {
+                    buttonCheck(currentScreen);
+                });
+            });
+        })
+    </script>

@@ -1,0 +1,130 @@
+﻿@model CambianPharmacy.ViewModels.ClientDueTodayVM
+    <div class="wrapper patient-home">
+        <div class="header-panel">
+            @Model.Client.FullName
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model.Client)
+
+        <div class="patient-meds-container">
+            <div id="patient-meds-inner-container">
+                @{ string firstClass = " patient-meds-first"; }
+                @foreach (var hour in Model.Doses.Select(d => d.Hour).Distinct().OrderBy(h => h))
+                {
+                <div class="patient-meds patient-meds-fullwidth@(firstClass)" id="meds-list">
+                @if (hour == 0)
+                {
+                    <p>Due Today</p>
+                }
+                else
+                {
+                    <p>Due at @hour.ToString("00"):00</p>
+                }
+                    <ul class="button-list patient-meds-list scheduled-meds">
+                    @foreach (var dose in Model.Doses.Where(d => d.Hour == hour))
+                    {
+                        if (dose.ResultCode > 0)
+                        {
+                            string secondClass;
+                            if (dose.ResultCode == 100)
+                            {
+                                secondClass = " takenAsDirected";
+                            }
+                            else
+                            {
+                                secondClass = " notTakenAsDirected";
+                            }
+                            <a href="#/Prescription/History/@dose.PrescriptionID"><li class="@dose.PrescriptionTypeName.ToLower() complete @(secondClass)">@dose.VTMName</li></a>
+                        }
+                        else
+                        {
+                            <a href="#/Dose/Administer/@dose.DoseID"><li class="@dose.PrescriptionTypeName.ToLower()">@dose.VTMName</li></a>
+                        }
+                    }
+                    </ul>
+                </div>
+                    if (firstClass != "") { firstClass = ""; }
+                }
+            </div>
+        </div>
+        <div id="patient-meds-container-scroll-nav">
+            <button id="scroll-up">
+                <img src="/Content/uparrow.png" alt="up-arrow" />
+            </button>
+            <button id="scroll-down">
+                <img src="/Content/downarrow.png" alt="down-arrow" />
+            </button>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                var newTop = 0,
+                    screenNum = 1,
+                    totalViewHeight = 0,
+                    animatingButtons = $('#patient-meds-container-scroll-nav button'),
+                    scrollUpButton = $('#patient-meds-container-scroll-nav button#scroll-up'),
+                    scrollDownButton = $('#patient-meds-container-scroll-nav button#scroll-down'),
+                    animatingDiv = $('#patient-meds-inner-container');
+
+                $('.patient-meds').each(function () {
+                    totalViewHeight = totalViewHeight + 70;
+                });
+
+                $('ul.patient-meds-list').each(function () {
+                    $(this).find('li').each(function () {
+                        totalViewHeight = totalViewHeight + 60;
+                    });
+                });
+
+                
+                viewHeightAfterFirstScreen = totalViewHeight - 470;
+                if (viewHeightAfterFirstScreen > 0) {
+                    totalScreens = viewHeightAfterFirstScreen / 410,
+                    totalScreens = Math.floor(totalScreens) + 2;
+                }
+                else {
+                    totalScreens = 1;
+                }
+
+                function screenNumCheck() {
+                    if (screenNum == 1) {
+                        scrollUpButton.hide();
+                        scrollDownButton.show();
+                    }
+
+                    if (screenNum == totalScreens) {
+                        scrollDownButton.hide();
+                        scrollUpButton.show();
+                    }
+
+                    if (totalScreens == 1) {
+                        scrollDownButton.hide();
+                        scrollUpButton.hide();
+                    }
+                }
+
+                animatingButtons.live('click', function (e) {
+                    if ($(this).attr('id') == "scroll-up" && screenNum > 1) {
+                        screenNum = screenNum - 1;
+                        newTop = newTop + 410;
+                    }
+                    else if ($(this).attr('id') == "scroll-down" && screenNum < totalScreens) {
+                        screenNum = screenNum + 1;
+                        newTop = newTop - 410;
+                    }
+
+                    animatingDiv.animate({ 'top': newTop + 'px' }, function () {
+                        screenNumCheck();
+                    });
+                });
+
+                screenNumCheck();
+            });
+        </script>
+        <div class="clearfix"></div>
+    </div>
+@*    <div class="lower-container patient-home"><div class="lower-panel">
+        <ul class="button-list special">
+            <a href="#/Client/PRNMeds/@Model.Client.ClientPatientID"><li class="prn">PRN</li></a>
+        </ul>
+        <div class="clearfix"></div></div>
+    </div>*@

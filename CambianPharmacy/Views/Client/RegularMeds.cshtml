@@ -1,0 +1,29 @@
+﻿@{
+    // Re-use the same demo layout to indicate different levels of completion for a patient
+    string firstItemClass = "", otherItemClass = "";
+    if (ViewBag.CompletionStatus > 0) { firstItemClass = "complete"; }
+    if (ViewBag.CompletionStatus > 1) { otherItemClass = "complete"; }
+}
+    <div class="wrapper patient-home">
+        <div class="header-panel">
+            Patient Name
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model.Client)
+
+        <div class="patient-meds" id="meds-list">
+            <p>Due at 22:00</p>
+            <ul class="button-list patient-meds-list scheduled-meds">
+                <a href="#/Dose/Administer/0"><li class="@firstItemClass">Sodium Valproate</li></a>
+                <a href="#/Dose/Administer/0" class="@otherItemClass"><li class="@otherItemClass">Lemsip</li></a>
+                <a href="#/Dose/Administer/0" class="@otherItemClass"><li class="@otherItemClass">Cottage Cheese</li></a>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="lower-container patient-home"><div class="lower-panel">
+        <ul class="button-list special">
+            <a href="#/Client/PRNMeds/0"><li class="prn">PRN</li></a>
+        </ul>
+        <div class="clearfix"></div></div>
+    </div>

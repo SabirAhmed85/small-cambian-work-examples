@@ -1,0 +1,19 @@
+﻿@model ActiveCareForms.Models.Client
+    <div class="wrapper patient-home">
+        <div class="header-panel">
+            @Model.FullName
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model)
+
+        <div class="patient-meds" id="meds-list">
+            <p>PRN Medications</p>
+            <ul class="button-list patient-meds-list prn-meds">
+                <a href="#/Dose/Administer/162014032609"><li>Diazepam</li></a>
+                <a href="#/Dose/Administer/162014032609"><li>Ibuprofen</li></a>
+                <a href="#/Dose/Administer/162014032609"><li>Eye of Newt</li></a>
+                <a href="#/Dose/Administer/162014032609"><li>Toe of Frog</li></a>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>

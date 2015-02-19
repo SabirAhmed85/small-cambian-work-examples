@@ -1,0 +1,29 @@
+﻿@model DateTime
+<script type="text/javascript">
+    $('#Save').click(function () {
+        $('#DateError').val('');
+        $.ajax({
+            type: "POST",
+            url: "/Home/SetDate",
+            data: { datestring: $('#EffectiveDate').val() },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.success) {
+                    $('#DateError').text(data.error);
+                }
+                else {
+                    window.location.hash = '#/Home/Dashboard';
+                }
+            }
+        });
+    });
+    $('#Now').click(function (e) {
+        e.preventDefault();
+        $('#EffectiveDate').val($(this).attr('datestring'));
+    });
+</script>
+<div class="wrapper">
+    <div class="header-panel">Testing Tools</div>
+    <div style="margin-top: 40px">Date: <input type="text" name="EffectiveDate" id="EffectiveDate" value="@Model.ToString("dd/MM/yyyy HH:mm")" /><a href="#" id="Now" datestring="@DateTime.Now.ToString("dd/MM/yyyy HH:mm")">Now</a><span id="DateError" style="color:Red"></span></div>
+    <div style="margin-top: 40px"><input type="button" id="Save" value="Save" style="width:80px;height:40px" /></div>
+</div>

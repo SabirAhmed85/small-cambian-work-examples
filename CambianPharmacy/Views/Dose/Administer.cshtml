@@ -1,0 +1,174 @@
+﻿@model ActiveCareForms.Models.Dose
+    <div class="wrapper patient-dose">
+        <div class="header-panel">
+            @Model.Schedule.Prescription.Client.FullName
+        </div>
+
+        @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model.Schedule.Prescription.Client)
+
+        @{
+            var lastDose = @Model.Schedule.Prescription.Schedules.SelectMany(s => s.Doses).OrderByDescending(s => s.RecordedDateTime).ToList().FirstOrDefault();
+        }
+
+        <div class="patient-dose-panel @Model.Schedule.Prescription.PrescriptionType.PrescriptionTypeName.ToLower()">
+            <input type="hidden" name="DoseID" id="DoseID" value="@Model.DoseID" />
+            <input type="hidden" name="PrescriptionID" id="PrescriptionID" value="@Model.Schedule.PrescriptionID" />
+            <input type="hidden" name="ScheduleID" id="ScheduleID" value="@Model.ScheduleID" />
+            <p class="dose-header">@Model.Schedule.Prescription.PrescriptionType.PrescriptionTypeName Prescription</p>
+            <p class="dose-title">@Model.Schedule.Prescription.MedicationVTM.Name <span class="dose-title3">@Model.Schedule.Prescription.DoseSize.ToString("0.##")@Model.Schedule.Prescription.MedicationUnit.Description @Model.Schedule.Prescription.MedicationRoute.Description</span></p>
+            @*<div class="dose-buttons" id="dose-t2-button">T2 Form</div>*@
+            <a href="#/Prescription/History/@Model.Schedule.PrescriptionID"><div class="dose-buttons">History</div></a>
+            <div id="dose-desc-container">
+                <p class="dose-desc">Prescribed by @Model.Schedule.Prescription.PrescribedBy.Fullname from @Model.Schedule.Prescription.StartDate.ToString("dd/MM/yyyy")</p>
+                @if (lastDose != null)
+                {
+                <p>Last dose @lastDose.RecordedDateTime.ToString("dd/MM/yyyy") - @(lastDose.ResultCode == 100 ? lastDose.DoseResult.Description : "Not Taken (" + lastDose.DoseResult.Description + ")")</p>
+                }
+            </div>
+            <div class="dose-result-buttons view main">
+            @if (Model.Schedule.Prescription.PrescriptionTypeID == 2)
+            {
+                <a href="#/Dose/Administer/@(Model.DoseID)?td" class="administer-action" side="-" result-id="100" dose-result="@Model.Schedule.Prescription.DoseSize.ToString("0.##")"><div class="taken dose-button"><img src="/Content/tick100_white.png" />Taken</div></a>
+            }
+            else
+            {
+                <a href="#" class="administer-action" side="-" result-id="100" dose-result="@Model.Schedule.Prescription.DoseSize.ToString("0.##")"><div class="taken dose-button"><img src="/Content/tick100_white.png" />Taken</div></a>
+            }
+                <a href="#/Dose/Administer/@(Model.DoseID)?nt" class="administer-action" side="-"><div class="not-taken dose-button"><img src="/Content/cross100_white.png" />Not Taken</div></a>
+            </div>
+            <div class="not-taken-buttons-container not-taken view nt" style="display:none">
+                <div class="not-taken-reasons-buttons">
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="1">
+                        <p class="not-taken-number">1</p>
+                        <p class="not-taken-text">Absent</p>
+                    </a>
+
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="2">
+                        <p class="not-taken-number">2</p>
+                        <p class="not-taken-text">Fasting</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="3">
+                        <p class="not-taken-number">3</p>
+                        <p class="not-taken-text">On Leave</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="4">
+                        <p class="not-taken-number">4</p>
+                        <p class="not-taken-text">Refused</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="5">
+                        <p class="not-taken-number">5</p>
+                        <p class="not-taken-text">Sleeping</p>
+                    </a>
+                    </div>
+                </div>
+                <div class="not-taken-reasons-buttons">
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="6">
+                        <p class="not-taken-number">6</p>
+                        <p class="not-taken-text">Unobtainable</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="7">
+                        <p class="not-taken-number">7</p>
+                        <p class="not-taken-text">Withheld</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="8">
+                        <p class="not-taken-number">8</p>
+                        <p class="not-taken-text">Given Elsewhere</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button">
+                    <a href="#" class="administer-action" side="-" result-id="9">
+                        <p class="not-taken-number">9</p>
+                        <p class="not-taken-text">Self Medicating</p>
+                    </a>
+                    </div>
+                    <div class="not-taken-button dummy-one">
+                    </div>
+                </div>
+            </div>
+            <div class="depot-result-buttons view td" style="display:none">
+                <a href="#" class="depot-button left administer-action" side="l" result-id="100">
+                    <div class="not-taken-number">L</div>
+                    <div class="not-taken-text">Left side</div>
+                </a>
+                <a href="#" class="depot-button right administer-action" side="r" result-id="100">
+                    <div class="not-taken-number">R</div>
+                    <div class="not-taken-text">Right side</div>
+                </a>
+            </div>
+            <div class="dose-confirmation view dc" style="display:none;">
+              <span id="dc-header">
+                <p id="not-fully-confirmed">Dose Recorded by: Sarah Goodnurse</p>
+                <button>Edit</button>
+              </span>
+              <p id="edit-note">Dose results can be edited up to 1 hour later. This dose will remain changeable until (Time &amp; Date)</p>
+              <div id="dose-details">
+                  <ul>
+                    <li>Result: Taken as Directed</li>
+                    <li>Time: ...</li>
+                    <li>Date: ...</li>
+                    <li>Dose Size: ...</li>
+                  </ul>
+              </div>
+            </div>
+            <div class="dose-confirmation view dca" style="display:none;">
+              <span id="dc-header">
+                <p id="fully-confirmed">Dose Recorded by: Sarah Goodnurse</p>
+              </span>
+              <div id="dose-details">
+                  <ul>
+                    <li>Result: Taken as Directed</li>
+                    <li>Time: ...</li>
+                    <li>Date: ...</li>
+                    <li>Dose Size: ...</li>
+                  </ul>
+              </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- <div id="lightbox-overlay" style="display:none;">
+    </div> -->
+    <div class="lightbox-content" rel="dose-t2-button" style="display:none;">
+        <!-- <img src="/Content/a4.png" alt="T2 Form" /> -->
+        <iframe src="http://docs.google.com/gview?url=http://www.mrebookclub.com/book/Catching_Fire.pdf&embedded=true" title="your_title" align="top" height="100%" width="100%" frameborder="0" scrolling="auto" target="Message">
+        <!-- Alternate content for non supporting browsers -->
+        <p align="center">Please click <a href="window.location.href='your_script.php'">here </a> to continue.</p>
+        </iframe>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#dose-t2-button').live('click', function () {
+                /* lightboxOverlay = $('#lightbox-overlay'); NOT NEED NOW AS PDF IS IN IFRAME - BUT THIS LOOKS NICER */
+                closeButton = $('<span></span>');
+                closeButton.attr('id', 'lightbox-close').html('X<span>Close</span>');
+                $('.lightbox-content').each(function () {
+                    if ($(this).attr('rel') == "dose-t2-button") {
+                        $(this).append(closeButton).fadeIn(500);
+                        thisLightbox = $(this);
+                        closeButton.bind('click', function () {
+                            $(this).addClass('clicked');
+                            thisLightbox.fadeOut(function () {
+                                closeButton.remove();
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    

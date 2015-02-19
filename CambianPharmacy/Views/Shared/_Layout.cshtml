@@ -1,0 +1,6 @@
+﻿@if (ViewBag.SystemUser != null)
+{
+    ActiveCareForms.Models.SystemUser su = ViewBag.SystemUser;
+    <input type="hidden" name="userID" id="userID" value=@su.UserID logged-in-as="Logged in as @su.NameAndRole." />
+}
+@RenderBody()

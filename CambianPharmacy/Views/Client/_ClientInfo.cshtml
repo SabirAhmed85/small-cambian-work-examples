@@ -1,0 +1,44 @@
+﻿@model ActiveCareForms.Models.Client
+
+<div class="patient-info">
+@{
+    //Check if the file exists, checking if the URL gives a response
+    string path = @ViewBag.Path + "/" + Model.ClientPatientID.ToString() + "-240.jpg";
+    HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(path);
+    request.UseDefaultCredentials = true; 
+    request.PreAuthenticate = true;
+    try
+    {
+        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        {
+            if (request.HaveResponse)
+            {
+            <img src='@(path)' class="patient-headshot" />                            
+            }
+        }
+    }
+    catch (Exception)
+    {
+        <img class="patient-headshot" src="/Content/headshot_240.jpg" />
+    }
+}    
+    <p>DOB @Model.DateofBirth.ToString("dd/MM/yyyy")</p>
+    <p>
+        @(Model.LastRiskScore.RiskStatus == "None" ? "N/A" : Model.LastRiskScore.RiskStatus + " Risk")
+        @*<span class='divider'>@(Model.DailyRiskScores.Count > 0 ? "|" : "")</span>  @(Model.DailyRiskScores.Count > 0 ? Model.LastRiskScore.LeaveStatusName : "")*@
+    </p>
+    @{
+        if (ViewBag.AllergensSignedOff == "")
+        {
+            <p>Allergies: None</p>
+        }
+        else
+        {
+            <a href="#/Client/AllergyReactions/@Model.ClientPatientID" class="allergies-summary-link">
+                <p class="allergies-summary">
+                    Allergies: @ViewBag.AllergensSignedOff
+                </p>
+            </a>
+        }
+    }
+</div>

@@ -1,0 +1,54 @@
+﻿<script type="text/javascript">
+
+    $(function () {
+        $('#submit').click(function () {
+            //Validate not empty fields
+            var valError = false;
+            var UN = $('#user').val();
+            var Password = $('#pass').val();
+            if (Password == "") {
+                $('#divError').text("The Password is required");
+                valError = true;
+            }
+            if (UN == "") {
+                $('#divError').text("The User Name is required");
+                valError = true;
+            }
+
+            if (!valError) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/CheckLogin",
+                    data: { UserName: UN, Pwd: Password },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (!data.success) {
+                            $('#divError').text(data.error);
+                        }
+                        else {
+                            window.location.hash = data.hash;
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>
+<div class="wrapper login">
+    <div class="header-panel">
+        <div class="cambian-logo"><img src="/Content/cambian_logo_white_42px.png" alt="Cambian Group Logo" /></div>
+    </div>
+    <div class="login-controls">
+        <h2>Sorry, you do not have permission to view that page</h2>
+        <div class="error" id="divError">Please go back, or log in as a different user</div>
+        <dl>
+            <dt>User Name: </dt>
+            <dd><input type="text" name="user" id="user" /></dd>
+            <dt>Password: </dt>
+            <dd><input type="password" name="pass" id="pass" /></dd>
+            <dd id="submit-dd"><input type="button" name="submit" id="submit" value="Login" /></dd>
+        </dl>
+    </div>
+</div>

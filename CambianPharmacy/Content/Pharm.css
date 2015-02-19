@@ -1,0 +1,268 @@
+﻿        @font-face {
+            font-family: 'vag_rounded_lt_comlight';
+            src: url('/Content/fonts/vagroundedltcom-light-webfont.eot');
+            src: url('/Content/fonts/vagroundedltcom-light-webfont.eot?#iefix') format('embedded-opentype'),
+                 url('/Content/fonts/vagroundedltcom-light-webfont.woff') format('woff'),
+                 url('/Content/fonts/vagroundedltcom-light-webfont.ttf') format('truetype'),
+                 url('/Content/fonts/vagroundedltcom-light-webfont.svg#vag_rounded_lt_comlight') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        body { padding: 0px; margin: 0px; width: 100%; font-size: 16px; font-family: Verdana; }
+        .wrapper { padding: 15px; overflow: hidden; position: absolute; height: auto; top: 0; bottom: 0; left: 0; right: 0; }
+        .header-panel { font-family: 'vag_rounded_lt_comlight'; font-size: 51px }
+
+        .dashboard, .login { background-color: #91278F;}
+        .dashboard .header-panel, .login .header-panel { color: White; }
+        .cambian-logo { float: right; position: relative; top: 4px }
+        
+        /*----- LOGIN PAGE -----*/
+        
+        .wrapper.login {background: #91278F;}
+        .login-controls {width:100%; max-width: 560px; margin: 155px auto 0; font-size: 35px; font-family: 'vag_rounded_lt_comlight';}
+        .login-controls h2 {color: #fff; font-size: 35px; text-align: center;}
+        .login-controls dl {margin: 0 auto; width: 75%; float: none;}
+        .login-controls dt, .login-controls dd {width: 100%; float: left; clear: left;}
+        .login-controls dt {color: #f86eef; font-size: 0.66em; margin-top: 5px; margin-bottom: 5px;}
+        .login-controls dd {padding: 5px 0; margin: 5px 0;}
+        .login-controls #submit-dd {border-top: 1px solid #9349aF; padding-top: 15px;}
+        .login-controls input {width: 95.5%; padding: 8px 2%; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; border: 2px solid #d579e8; color: #81177F; font-size: 0.66em; background: #facefd;}
+        .login-controls input:focus {background: #faadff;}
+        .login-controls input#submit {width: 50%; margin: 0 auto; float: none; display: block; border: 1px solid #9348FB; background: #f7f7f7; color: #81177F; cursor: pointer;}
+        .login-controls .error { color: Red; text-align: center; font-size: 0.66em; -webkit-margin-before: 0.83em; -webkit-margin-after: 0.83em; }
+        /*----- END OF LOGIN PAGE -----*/
+
+        .drug-round { background-color: White; }
+        .drug-round .header-panel { color: #91278F; }
+        
+        .patient-home, .patient-dose { background-color: #005500; color: White }        
+
+        .lower-container { margin-top: 100px; position: fixed; bottom: 50px; width: 100% }
+        .lower-panel { padding: 15px }
+
+        ul { list-style: none; margin: 0; padding: 0; }
+        ul.button-list li { font-family: 'vag_rounded_lt_comlight'; font-size: 35px; padding: 6px 8px 4px 8px; margin-top: 15px }
+        ul.drug-rounds { margin-top: 100px }
+        ul.drug-rounds li { background-color: White; color: #91278F; }
+        ul.drug-rounds li.complete { background-color: #E23DE2 }        
+        ul.dailies { width: 50%; float: left }
+        ul.dailies li.depot { background-color: Red; color: White }
+        ul.dailies li.one-offs { background-color: #FFD800; color: Black }
+        ul.special { width: 25%; float: right }
+        ul.special li { background-color: White; color: Black; text-align: center }
+        ul.special li.prn { background-color: Green; color: White }
+        ul.special li.regular { background-color: #0077FF; color: White }
+        ul.special li.all-patients { background-color: White; color: #91278F; }
+        ul.patient-list { margin-top: 20px }
+        ul.patient-list li { color: White; background-color: #005500; padding: 10px; width: 130px; height: 195px; float: left; margin-right: 10px; margin-bottom: 10px; }
+        ul.patient-list li.gray-scale-background { background-image: url('/Content/tick30.png'); background-repeat: no-repeat; background-position: bottom right; background-color: rgb(173, 173, 173);}
+        ul.patient-list li img { display: block; margin-bottom: 4px }
+        ul.patient-list li img.gray-scale { filter: url(filters.svg#grayscale); /* Firefox 3.5+ */ filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ }        
+        ul.patient-list li img.disable-gray-scale { filter: none; -webkit-filter: grayscale(0); }
+        ul.patient-meds-list li { background-color: #007FFF; color: White; white-space: nowrap; }
+        
+        ul.patient-meds-list li.regular { background-color: #007FFF;}
+        ul.patient-meds-list li.depot { background-color: Red;}
+        ul.patient-meds-list li.prn { background-color: Green;}
+        ul.patient-meds-list li.one-off { background-color: #ffd800; color: #000;}
+        
+        ul.patient-meds-list li.uncomplete { background-color: Red }        
+        
+        div.prescription-table { margin-top: 30px; font-family: 'vag_rounded_lt_comlight'; width: 95%; float:left; position: relative; }
+        div.prescription-table #prescription-outer-view { float: left; position: relative; width: 100%; overflow: hidden; height: 210px;}
+        div.prescription-table #prescription-inner-view { position: absolute; left: 0; top: 0; width: 100%; }
+        div.prescription-table .prescription-row { border-bottom-width: 1px; border-bottom-style: dotted; float: left; width: 100%; }
+        div.prescription-table .prescription-header { font-weight: bold; border-bottom-width: 1px; border-bottom-style: solid; margin-bottom: 10px; }
+            .regular div.prescription-table .prescription-row { border-bottom-color: #66baFF;}
+            .regular div.prescription-table .prescription-header { border-bottom-color: #007FFF;}
+            .depot div.prescription-table .prescription-row { border-bottom-color: #e9b4c0;}
+            .depot div.prescription-table .prescription-header { border-bottom-color: Red;}
+            .prn div.prescription-table .prescription-row { border-bottom-color: #69dd80;}
+            .prn div.prescription-table .prescription-header { border-bottom-color: Green;}
+            .one-off div.prescription-table .prescription-row { border-bottom-color: #eee144;}
+            .one-off div.prescription-table .prescription-header { border-bottom-color: #ffd800;}
+        div.prescription-table span { padding: 7px 0; width: 14%; min-width: 85px; white-space: nowrap; float: left;}
+        div.prescription-table span.medium-width-span { width: 12%; min-width: 60px; }
+        div.prescription-table span.name { width: 20%; min-width: 100px; }
+        div.prescription-table span.result { width: 32%; min-width: 145px; }
+        ul.prescription-nav { height: 335px; position: absolute; top: -40px; left: 45%; }
+        ul.prescription-nav a { display: none; width: 83px; }
+        ul.prescription-nav a img { width: 83%; float: right; }
+            .regular ul.prescription-nav a img { border: 1px solid #66baff; }
+            .depot ul.prescription-nav a img { border: 1px solid #e9b4c0; }
+            .prn ul.prescription-nav a img { border: 1px solid #69dd80; }
+            .one-off ul.prescription-nav a img { border: 1px solid #eee144; }
+        ul.prescription-nav a#next { position: absolute; bottom: 0; }
+        #scroller-note {float: left; width: 100%; text-align: center; padding: 9px 0;}
+            .regular #scroller-note { color: #007FFF; border-bottom: 1px solid #007FFF; border-top: 1px solid #66baFF; }
+            .depot #scroller-note { color: Red; border-bottom: 1px solid Red; border-top: 1px solid #e9b4c0;}
+            .prn #scroller-note { color: Green; border-bottom: 1px solid Green; border-top: 1px solid #69dd80;}
+            .one-off #scroller-note { color: #ffd800; border-bottom: 1px solid #ffd800; border-top: 1px solid #eee144;}
+        #scroller-note span { float: none; width: auto; min-width: 0; clear: none; padding: 0; white-space: normal; font-weight: bold;}
+        
+        /* REGULAR MEDICATION TABLE */
+        
+        #regular-medication-table-button {text-decoration: none; }
+        
+        #regular-medication-table {float: left; width: 97%; font-size: 12px; text-transform: uppercase; margin-top: 20px;}
+        #regular-medication-table p { color: #001fff;}
+        
+        #regular-medication-table-header {width: 100%; height: 96px;}
+        #regular-medication-table-header > div {float: left; border: 1px solid #008FFF; border-top: 1px solid #008FFF; border-right: none; }
+                
+        #topleft1, #topleft2 {width: 13%; min-width: 80px;}
+        #form {width: 11.5%; min-width: 86px; padding: 5px 1%; height: 81px;}
+        #medicine, #prescribers-sig { min-width: 130px; padding: 5px 1%; height: 81px;}
+        #medicine {width: 25.4%;}
+        #prescribers-sig {width: 29.4%; border-right: 1px solid #008fff !important;}
+        #medicine label, #form label, #prescribers-sig label {float: left;}
+        #medicine p, #form p, #prescribers-sig p {float: left; clear: left; padding: 0; margin-top: 15px; font-size: 1.3em; font-weight: bold;}
+                
+        #date, #route {height:20px; padding: 4px 7% 0;}
+        #time, #dose {height:22px; font-size: 15px; padding-top: 3px;}
+        #start-date, #stop-date {height: 40px; border-bottom: 1px solid #007FFF; font-size: 11px;}
+        #start-date p, #stop-date p {font-weight: bold; margin-top: 6px;}
+        #time, #dose, #start-date, #stop-date {text-align: center;}
+        #date, #route {border-bottom: 1px solid #007FFF;}
+        #date label, #route label, #date p, #route p {float: left;}
+        #date p, #route p {font-weight: bold; margin-left: 10px; padding: 0;}
+                
+        .date {float:left; width: 50%; border-right: 1px solid #007FFF; height: 100%;}
+                
+        #medicine { text-transform: none;}
+                
+        .reg-med-data-row {position: absolute; top: 20px;}
+        .reg-med-data-row.top { margin-bottom: 5px; width: 100%; float: right; clear: both; height: 80px; top: 0; }
+        .reg-med-data-row > div {float: left; border-top: 1px solid #007FFF; }
+        .reg-med-data-row.last > div {border-bottom: 1px solid #007fff; }
+        .reg-med-data-row.top > div {border: 1px solid #0000cc; border-top: 1px solid #0000cc; border-right: none; border-left: none;}
+        .reg-med-data-row.top .empty-item-row1, .toprow-month-div.first { border-left: 1px solid #0000cc;}
+        #toprow-month-row { border-top: none; border-bottom: none; }
+        div.empty-item-row1 {clear: left; float: left; margin-left: 416px; border-left: 1px solid #007fff;}
+        .toprow-month-div { border: 1px solid #0000cc; height: 40px; border-left: none; border-bottom: none;}
+        .toprow-month-div {float: left; height: 25px; background: #008fff;}
+        .toprow-month-div.first {margin-left: 415px;}
+        .toprow-month-div p {padding-top: 7px !important; color: #e0e0e0 !important;}
+        .toprow-month-div label, .toprow-year-div label, .toprow-month-div p, .toprow-year-div p  {margin-top: 3px; margin-left: 3px; float: left; clear: left; }
+        .toprow-month-div label, .toprow-year-div label  {margin-left: 7px; }
+        .toprow-month-div p, .toprow-year-div p  {margin-right: 10px !important; font-weight: bold; float: left; }
+        .reg-med-data-row.top .empty-small-box { border-right: 1px solid #0000cc !important; border-top 1px solid #0000cc !important; background: #99cfff;}
+        .empty-time-div, .empty-dose-div, .empty-small-box, .empty-item-row1, .empty-item-row2, .empty-item-row3, .empty-item-row {float: left; height: 40px;}
+        .empty-item-row {border-left: none !important; border-right: none !important;}
+        .empty-time-div { float: left; clear: left;}
+        #time-and-dose-labels {position: fixed; top: 303px; left: 274px; background: #BBDDFF; padding-top: 70px; padding-left: 2px; z-index: 10; border-bottom: 2px solid #007fff; border-right: 1px dotted #007fff; width: 20.5%;}
+        .empty-time-div, .empty-dose-div {text-align: center; font-size: 1.2em; padding-top: 9px; height: 30px; border-top: 1px solid #007fff}
+        .empty-time-div, .empty-dose-div {width: 48.5%; border-right:1px solid #0000cc; text-transform: none; background: #99cfff;}
+        .empty-time-div {border-left:1px solid #007FFF;}
+        .empty-small-box {  width: 53.5px; border-right:1px solid #007FFF; font-size: 1.2em; padding-top: 10px; height: 30px; text-align: center;}
+                
+        #stock-balance-row, #stock-received-row {width : 100%;}
+        #stock-balance-row > div, #stock-received-row > div {float: left; border: 1px solid #2F5E73; border-top: 2px solid #007FFF; border-bottom: none;}
+        #stock-balance-row .main-label, #stock-received-row .main-label {width: 24%; min-width: 160px; border-right: 3px solid #007FFF; height: 17px; text-align: right; padding: 13px 1% 10px; font-weight: bold;}
+        #stock-balance-row > div, #stock-received-row > div, #stock-balance-row .empty-small-box, #stock-received-row .empty-small-box {background:#aaccd0;}
+        /* -- END OF REG MED TABLE -- */
+        
+        .patient-info p, .patient-meds p, .patient-dose-panel p { margin: 0px }
+        
+        .patient-info { margin-top: 35px; font-family: 'vag_rounded_lt_comlight'; font-size: 22px; float: left; margin-right: 20px;}
+        .allergies-summary { background-color: White; color: Red; width: 210px; text-align: center; padding: 15px; }
+        .allergies-summary-link { text-decoration: none; }
+        .patient-meds-container { margin-top: 35px; overflow: hidden; height: 470px; position:relative;}
+        .patient-meds { margin-top: 30px; font-family: 'vag_rounded_lt_comlight'; font-size: 36px; margin-left: 260px; }
+        .patient-meds-fullwidth { margin-left: 0; }
+        .patient-meds-first { margin-top: 0; }
+        #patient-meds-inner-container {position: absolute; top: 0; left: 0; width: 100%; }
+        #patient-meds-container-scroll-nav {float: right; position: absolute; top: 68px; z-index: 9999; right: 40%;}
+        #patient-meds-container-scroll-nav button {margin: 0; padding: 0; background-color: transparent; border: none;}
+        #patient-meds-container-scroll-nav #scroll-down {position: absolute; top: 510px; right: 0;}
+        
+        .patient-dose-panel { margin-top: 35px; font-family: Verdana; font-size: 16px; min-height: 445px; margin-left: 255px; }
+        p.dose-title { font-family: 'vag_rounded_lt_comlight'; font-size: 36px; width: 80%; float: left; margin-left: -6px;}
+        p.dose-title.inline {  display: inline; }
+        p.dose-title2 { font-family: 'vag_rounded_lt_comlight'; font-size: 25px; margin-top: -10px; margin-bottom: 20px; }
+        span.dose-title3 { font-family: 'vag_rounded_lt_comlight'; font-size: 25px; }
+        #dose-desc-container {float: left; width: 99%; margin-bottom: 20px;}
+        p.dose-size { font-weight: bold; margin-top: 30px;}
+
+        .patient-dose-panel.regular { background-color: #BBDDFF; color: Black }
+        .patient-dose-panel.prn { background-color: #BEFFD3; color: Black }
+        .patient-dose-panel.depot { background-color: #F5E7F2; color: Black }
+        .patient-dose-panel.one-off { background-color: #fff7aa; color: Black }
+        
+        .patient-dose-panel p { padding: 3px 5px }
+        .regular p.dose-header { background-color: #007FFF; color: White }
+        .prn p.dose-header { background-color: Green; color: White }
+        .depot p.dose-header { background-color: Red; color: White }
+        .one-off p.dose-header {background-color: #ffd800; color:Black;}
+        
+        .dose-result-buttons { width: 454px; margin: 20px auto 0px auto }
+        .dose-result-buttons a { color : #000;}
+        .dose-button { background-color: White; text-align: center; padding: 20px 40px }
+        .dose-button img { display: block; margin-bottom: 20px }
+        .dose-button.taken { float: left }
+        .dose-button.not-taken { float: right }
+        
+        .dose-confirmation {float: left; margin: 20px 7%; padding-bottom: 15px; background: #f6f6f6; width: 85%;}
+        .dose-confirmation #dc-header {background: #e3e3e3; color: #333; padding: 6px 1% 6px 3%; float: left; width: 96%;}
+        .dose-confirmation #dc-header p#fully-confirmed {float: left; margin-top: 5px; margin-bottom: 5px;}
+        .dose-confirmation #dc-header p#not-fully-confirmed {float: left; margin-top: 10px;}
+        .dose-confirmation #dc-header button {float: right; margin: 0; padding: 10px; font-size: 16px; letter-spacing: 2px;}
+        .dose-confirmation #edit-note {background: #b3b3b3; color: #333; padding: 8px 1% 8px 3%; font-size: 13px; text-align: right; float: left; width: 96%;}
+        .dose-confirmation #dose-details {padding: 10px 5%; float:left;}
+        .dose-confirmation #dose-details li {margin-bottom:5px;}
+        
+        .not-taken-buttons-container { display: table; border-collapse: separate; margin: 0 auto; width: 680px; }
+        /*.not-taken-buttons-container.leftright { border-spacing: 65px; margin-top: -100px!important; }*/
+        .not-taken { border-spacing: 10px; }
+        .not-taken-reasons-buttons { font-family: 'vag_rounded_lt_comlight'; margin: 0px 20px 0px 20px; float: left; display: table-row; border-collapse: separate; }
+        .not-taken-reasons-buttons a { text-decoration: initial; color: Black; }
+        .not-taken-button { display: block; background-color: White; text-align: center; width: 114px; height: 114px; margin: 5px; float: left; }
+        .not-taken-button.leftright { width: 100px; height: 100px; }
+        .not-taken-button.dummy-one { display: table-cell; background-color: transparent; width: 102px; height: 114px; }
+        .not-taken-number { font-size: 50px; }
+        .not-taken-text { vertical-align: bottom; font-family: verdana; font-size: 14px; }
+        
+        .depot-result-buttons { width: 270px; margin: 20px auto 0px auto }
+        .depot-button { background-color: White; text-align: center; padding: 10px 25px; text-decoration: initial; color: Black; font-family: 'vag_rounded_lt_comlight'; }
+        .depot-button.left { float: left }
+        .depot-button.right { float: right }
+        
+        .allergies-reactions { margin-left: 260px; margin-top: 35px; width: 1600px; background-color: White; color: Red; height: 240px; }
+        .allergies-reactions div { position: relative; padding-left: 15px; padding-top: 1px; }
+        
+        
+        
+        
+        
+        
+        .prn-buttons-container { display: table; border-collapse: separate; border-spacing: 10px; margin: 0 auto; width: 50%; }
+        .prn-amounts-buttons { width: 90%; font-family: 'vag_rounded_lt_comlight'; margin: 0px 20px 0px 20px; float: left; display: table-row; border-collapse: separate; }
+        .prn-button { background-color: White; display: table-cell; padding: 10px; text-align: center; width: 90px; height: 100px; color: Black; text-decoration: initial; vertical-align: middle; }
+        .prn-mg { font-size: 30px; margin-bottom: 5px; }
+        .prn-tablets { vertical-align: bottom; padding-top: 5px; margin-bottom: -5px; }        
+        .od { vertical-align: top; margin-top: -20px; }
+        
+        .status { float: right; font-size: 0.66em; margin-top: 0.5em }
+        .button-list .status { margin-top: 6px }
+        .indicator { float: right; margin-left: 10px }
+        .divider { font-size: 88%; position: relative; top: -0.1em }
+        
+        .flag { font-family: Verdana; background-color: #FFD800; color: Black; margin: 10px; font-size: 16px; padding: 4px 6px; position: relative; top: -6px }
+        
+        .login-bar { /* clear: both; */ font-family: Verdana; color: White; background-color: Black; height: 50px; position: fixed; bottom: 0; width: 100%; z-index: 1000; } 
+        .login-panel { padding: 5px; }
+        .login-buttons, .dose-buttons { float: right; padding: 10px; color: Black; background-color: White; margin-left: 5px; width: 75px; text-align: center }
+        .login-buttons.go-back { display: none }
+        .login-buttons.home{ text-decoration: initial; color: Black; }
+        
+        .dose-buttons { margin: 8px 5px 0 0; }
+        
+        #lightbox-overlay {height: 100%; width: 100%; z-index: 9999; background-color:#000; position: fixed; opacity: 0.6;}
+        .lightbox-content {position: fixed; z-index: 9999; width: 100%; height: 100%;}
+        .lightbox-content img {display:block; margin: 10% auto;}
+        #lightbox-close {color: #fff; position: fixed; top: 5%; right: 10%; font-size: 40px; width: 60px; text-align: center; cursor: pointer;}
+        #lightbox-close.clicked {color: #ccc;}
+        #lightbox-close span {font-size: 20px; width: 100%; float: left;}
+
+        .clearfix { clear: both }

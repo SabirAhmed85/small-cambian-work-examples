@@ -1,0 +1,16 @@
+﻿@model ActiveCareForms.Models.Client
+           
+<div class="wrapper patient-home">
+    <div class="header-panel">
+        @Model.FullName
+    </div>
+
+    @Html.Partial("~/Views/Client/_ClientInfo.cshtml", Model)
+
+    <div class="allergies-reactions">
+        <div>
+            <h4>Allergy Reactions:</h4>
+            @Model.PharmacyClient.AllergyReactionsSignedOff
+        </div>
+    </div>
+</div>
