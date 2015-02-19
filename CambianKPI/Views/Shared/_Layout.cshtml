@@ -1,0 +1,110 @@
+﻿@using CambianKPI.DAL.Models
+@using ActiveCareForms
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.ContentWithTimestamp("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <!-- [if lt ie8]>
+        <link href="@Url.ContentWithTimestamp("~/Content/ie7-Site.css")" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script src="@Url.Content("~/Scripts/jquery-1.8.1.min.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.ContentWithTimestamp("/Scripts/date-en-GB.js")"></script>
+    <script type="text/javascript">
+        var globalVariables = {}
+        $(function () {
+            // Function for the Date Change dropdown
+
+            relDate = $('#main-site-selection dl select').val();
+
+            relDate = Date.parseExact(relDate, "yyyy-MM-dd");
+            //DateJS format turns the first value as month and second value as day
+            globalVariables.thisDay = new Date(relDate).getDate();
+            globalVariables.thisYear = new Date(relDate).getFullYear();
+            globalVariables.thisMonth = new Date(relDate).getMonth() + 1;
+
+            function dateChangeDropdown() {
+                var select = document.getElementById("WeekEndingDate");
+
+                if (select) {
+                    select.onchange = function () {
+                        var url = window.location.href;
+                        if (location.pathname == "/") { url += "Home/Index"; }
+                        //If URL has already specified a date then the string must be manipulated differently
+                        if (url.indexOf('-') != -1) {
+                            newUrl = url.substring(0, url.length - 11);
+                            window.location.href = newUrl + "/" + select.value;
+                        }
+                        else {
+                            window.location.href = url + "/" + select.value;
+                        }
+                    }
+                }
+            }
+
+            dateChangeDropdown();
+        })
+    </script>
+</head>
+<body>
+@if (ViewBag.ServerType != null)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#TestUser').change(function () {
+                var userID = $(this).val()
+                $.post('/Admin/ChangeUser', { id: userID }, function (data) {
+                    $('.ajaxloading_testuser').hide();
+                    document.location.reload(true);
+                });
+                $('.ajaxloading_testuser').show();
+            });
+        });
+    </script>
+    <div class="server @ViewBag.ServerType">
+    @if (ViewBag.TestUser != null)
+    {
+        <div style="float:right">
+            <img style="display:none" class="ajaxloading_testuser" src="/Content/ajax-loader-red.gif" alt="Please wait" title="Please wait while server updates the test user" />
+            User: @Html.DropDownList("TestUser")
+        </div>
+    }
+        @ViewBag.ServerType
+        <div style="clear:both"></div>
+    </div>
+}
+    <div class="page">
+        <div id="header">
+            <div id="inner-header">
+                <div id="title">
+                    <h1><a href="/" title="Back to Homepage">Cambian KPI</a></h1>
+                </div>
+                @if (@ViewBag.LoggedInAs != null)
+                {
+                <div id="logindisplay">
+                    Welcome <strong>@ViewBag.LoggedInAs.NameAndRole</strong>
+                </div>
+                }
+                else
+                {
+                <div id="logindisplay">
+                    Welcome <strong>@User.Identity.Name</strong>
+                </div>
+                }
+                
+                <div id="menucontainer">
+                    <ul id="menu">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+</body>
+</html>

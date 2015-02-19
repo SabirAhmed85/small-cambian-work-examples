@@ -1,0 +1,16 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h2>
+    Sorry, an error occurred while processing your request.
+</h2>
+
+<div id="container" class="main-list">
+    <div id="main-inner">
+        <div class="list-content-div">Full details of the error have been logged so that the IT Helpdesk can assist you.</div>
+        <div class="list-content-div" style="font-style:italic; border-top: 2em">@Model.Exception.Message</div>
+    </div>
+</div>
