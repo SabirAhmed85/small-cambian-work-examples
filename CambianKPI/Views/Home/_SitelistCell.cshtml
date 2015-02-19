@@ -1,6 +1,0 @@
-﻿﻿@model float?
-
-    @{ var negClass = Model < 0 ? " neg" : ""; }
-    <span class="status-bar-value@(negClass)">
-        @(Model.HasValue ? Model.Value.ToString("#,#0.##;(#,#.##)") : "-")
-    </span>
