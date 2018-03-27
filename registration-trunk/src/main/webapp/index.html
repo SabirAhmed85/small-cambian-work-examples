@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <title>Colt Registration Form</title>
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon-16x16.png" />
+
+    <!-- build:css_vendor styles/style-vendor.min.css -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
+    <!-- endbuild -->
+
+    <!-- build:css_app styles/style.min.css -->
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="stylesheet" href="assets/custom-icons/style.css" />
+
+    <link rel="stylesheet" href="assets/css/fonts/titillium-web.css" />
+    <!-- endbuild -->
+
+  </head>
+  <body class="registration-page" ng-controller="MainController as main">
+    <div class="logo-container">
+        <div class="row sidebar-logo">
+            <img src="assets/images/colt-logo-light@2x.png">
+
+            <span class="lang-select">
+              <ul translate-language-toolbar id="language-toolbar" class="nav navbar-nav">
+              </ul>
+            </span>
+            
+            <span class="logo-title">&nbsp;</span>
+            <br/>
+            <h2 translate="registration.form-labels.registration-form"></h2>
+        </div>
+    </div>
+    <div class="hero-img registration-hero-img">
+        <div class="hero-img-overlay"></div>
+    </div>
+    <div id="lightbox" class="lightbox lightbox-hidden fade-trans" ng-class="{'trans-show': main.loading}">
+      <i class="lightbox-item fa fa-refresh fa-spin fa-4x fa-fw loading-div-item"></i>
+    </div>
+    <div id="mainContainer">
+      <div ng-view class="fade-trans" ng-class="{'trans-show': !loading}">
+      </div>
+    </div>
+    <div class="footer">
+    </div>
+
+    <!-- build:js_vendor scripts/vendor.min.js -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+    <script src="node_modules/angular-cookies/angular-cookies.js"></script>
+    <script src="node_modules/ui-select/dist/select.js"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="node_modules/moment/min/moment-with-locales.min.js"></script>
+    <script src="node_modules/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <!--
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/file-saver/FileSaver.js"></script>
+    -->
+    <!-- endbuild -->
+
+    <!-- build:js_app scripts/scripts.min.js -->
+    <!--APPFILES-->
+    <script src="app/app.js"></script>
+
+    <!--SERVICES-->
+    <script src="app/services/apiService.js"></script>
+    <script src="app/services/localeService.js"></script>
+    <script src="app/services/dynamicLocalePreload.js"></script>
+
+    <!--DIRECTIVES-->
+    <script src="app/shared/directives/language-toolbar.directive.js"></script>
+
+    <!-- CONTROLLERS -->
+    <script src="app/components/main/main.controller.js"></script>
+    <script src="app/components/registration/registration.controller.js"></script>
+
+    <script src="app/components/shared/modals/registration-submission-received/registration-submission-received-modal.component.js"></script>
+    <!-- endbuild -->
+
+  </body>
+</html>

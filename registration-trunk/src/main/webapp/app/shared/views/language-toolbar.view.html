@@ -1,0 +1,22 @@
+<!--ul id="language-toolbar" class="nav navbar-nav"-->
+    <li>
+        <div class="dropdown user-profile-menu">
+            <div class="btn-group" uib-dropdown uib-keyboard-nav>
+                <button id="language-toolbar-button" type="button" class="btn" uib-dropdown-toggle>
+                    <i class="fa fa-globe"></i> 
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                    <li ng-repeat="loc in locales" role="menuitem">          
+                    <a ng-click="changeLanguage(loc.key)" class="clickable">
+                        <span class="language-toolbar-icon-wrapper">
+                            <i ng-if="currentLocaleDisplayName.key == loc.key" class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+                        {{loc.value}}
+                    </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+<!--/ul-->

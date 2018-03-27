@@ -1,0 +1,47 @@
+/*Converting CSS3 for cross-browser*/
+@mixin css-trans($trans) {
+  -webkit-transition: $trans;
+  -moz-transition: $trans;
+  -o-transition: $trans;
+  transition: $trans;
+}
+
+@mixin border-radius($radius) {
+	border-radius: $radius;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+}
+
+@mixin unique-border-radius($radius1, $radius2, $radius3, $radius4) {
+	border-radius: $radius1 $radius2 $radius3 $radius4;
+	-webkit-border-radius: $radius1 $radius2 $radius3 $radius4;
+	-moz-border-radius: $radius1 $radius2 $radius3 $radius4;
+}
+
+/*HTML Structural elements*/
+
+@mixin elem-force-left {
+  float: left;
+  clear: both;
+}
+
+@mixin left-full-width {
+  float: left;
+  width: 100%;
+}
+
+/*Colt Color Branding Options*/
+
+@mixin colt-light-green-bg {
+  background-color: #008b81;
+}
+@mixin colt-dark-green-bg {
+  background-color: #00695f;
+}
+
+@mixin colt-light-blue-bg {
+  background-color: rgb(35, 100, 145);
+}
+@mixin colt-dark-blue-bg {
+  background-color: rgb(0, 70, 110);
+}

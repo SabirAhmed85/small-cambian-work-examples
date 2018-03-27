@@ -1,0 +1,17 @@
+<div>
+    <div class="modal-header primary-theme">
+        <h3 class="modal-title" ng-bind="$ctrl.translatedModalMessages.Title">
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-xs-12 sub-heading" ng-if="$ctrl.translatedModalMessages.Head" ng-bind="$ctrl.translatedModalMessages.Head"></div>
+            <div class="col-xs-12" ng-class="{'parag-2': $ctrl.translatedModalMessages.Head}" ng-bind="$ctrl.translatedModalMessages.Message"></div>
+            <div class="col-xs-12 sub-heading" ng-if="$ctrl.translatedModalMessages.SubHead" ng-bind="$ctrl.translatedModalMessages.SubHead"></div>
+            <div class="col-xs-12 parag-2" ng-if="$ctrl.translatedModalMessages.Message2" ng-bind="$ctrl.translatedModalMessages.Message2"></div>
+        </div>
+    </div>
+    <div class="modal-footer primary-theme-footer">
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.ok();" translate="registration.popup-labels.close" ng-if="$ctrl.showClose"></button>
+    </div>
+</div>

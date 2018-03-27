@@ -1,0 +1,427 @@
+/*
+ * Base structure
+ */
+
+/* Global Elements */
+@import "_global-mixins.scss";
+
+/* Colt Elements could be used globally */
+@import "_colt-elements.scss";
+
+/* Media query for header breaking point*/
+@media (max-width: 1180px){
+  #main-menu .hide-menu-text{
+    display: none;
+  }
+}
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 15px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+
+.navbar-fixed-top {
+  border: 0;
+}
+
+.navbar-header a {
+  padding-top: 1.1em;
+}
+
+#headerNavigation {
+  background: transparent !important;
+}
+
+.navbar-nav>li>a {
+  padding-bottom: 0;
+}
+
+#globalSearch {
+  position: relative;
+  top: 0.1em;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+  padding-top: 16px;
+}
+
+.navbar-brand:focus,
+.navbar-brand:hover {
+  color: #999 !important;
+}
+
+.request-dropdown-menu {
+  left: -8em;
+  right: 0;
+  width: 180px;
+}
+
+#secondary-navigation-button {
+  background: transparent;
+  color: white;
+}
+
+#main-menu {
+  position: relative;
+  bottom: 0.4em;
+}
+
+#main-menu li .fa {
+  position: relative;
+  top: 0.15em;
+  margin-right: 0.15em;
+}
+
+
+/*
+ * Main content
+ */
+
+.lightbox {
+  text-align: center;
+  min-height: 500px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(240, 240, 240, 0.6);
+  color: #00695f;
+}
+
+.lightbox i {
+  top: 45%;
+  position:absolute;
+  left: calc(50% - 36px);
+}
+
+#mainContainer {
+  padding: 0 1em;
+  margin-top: 1em;
+  background: transparent;
+  overflow: auto;
+  width: 100%;
+  min-height: 600px;
+}
+
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.panel-body table {
+  max-height: 200px;
+}
+
+.panel-heading .fa,
+.page-header .fa {
+  padding-right: 0.5em;
+}
+
+#breadcrumbs {
+  padding: 0.5em;
+  overflow: hidden;
+  border: 1px solid #eee;
+  margin: 0 1em;
+}
+
+/* Individual Pages */
+
+.hero-img.registration-hero-img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 600px;
+  background: url('../../assets/images/colt-header.jpg') center 0 no-repeat;
+  background-size: cover;
+}
+
+.hero-img .hero-img-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.7);
+}
+
+.registration-page {
+
+  & .logo-container .logo-title {
+    height: 0;
+  }
+
+  & .lang-select {
+    position: absolute;
+    min-width: 23px;
+    right: 0;
+    top: 33px;
+    font-size: 18px;
+
+    & .label {
+      float: left;
+      margin-top: 6px;
+      margin-right: 15px;
+    }
+
+    & #language-toolbar-button {
+      background: none;
+      padding-right: 0;
+      top: -9px;
+
+      &:hover,
+      &:focus,
+      &.focus,
+      &.active,
+      &:active {
+        color: #bbb;
+      }
+    }
+
+    & .dropdown-menu {
+      right: 0;
+      left: auto;
+      background: #fff;
+    }
+  }
+
+  .sub-heading,
+  .parag-2 {
+    float: left;
+    clear: left;
+    margin-top: 10px;
+  }
+
+  .sub-heading {
+    font-weight: bold;
+  }
+
+  & .registration-container {
+    padding: 0;
+    max-width: 1200px;
+    float: none;
+    margin: 0 auto;
+
+    & .glyphicon {
+      margin-right: 10px;
+    }
+
+    & .form-intro {
+      margin-top: 30px;
+      text-shadow: 1px 1px 1px #000;
+      
+      &.form-intro-error {
+        color: #621d1d;
+        background: rgba(240, 210, 209, 0.8);
+        padding: 14px 10px 5px;
+        text-shadow: none;
+        border-radius: 4px;
+      }
+    }
+
+    & form {
+      box-shadow: 1px 2px 3px #ddd;
+      border-color: #9ea5c9;
+      border-top-color: #8890bf;
+
+      & .form-intro {
+        margin-top: 30px;
+        text-shadow: 1px 2px 1px #0f321e;
+        background: rgba(196, 245, 202, 0.3);
+        padding: 30px 30px 20px;
+        border-radius: 4px;
+        border: 1px solid #577464;
+        line-height: 35px;
+      }
+
+      & .form-section {
+
+        &.form-final-section {
+          padding-bottom: 0;
+          padding-right: 5px;
+        }
+
+        & .section-header {
+          & i.header-icon {
+            border-right-color: #2d8453;
+            padding-right: 20px;
+          }
+
+          & span {
+            margin-left: 40px;
+          }
+        }
+
+        & .form-group {
+          &.ocn-exists-group {
+            margin-top: 33px;
+          }
+  
+          &.form-group-short {
+            & .input-label {
+              width: calc(100% - 45px);
+            }
+
+            & input[type="text"] {
+              margin-top: -7px;
+            }
+          }
+
+          & .form-group-inner {
+            @include left-full-width;
+            padding: 15px 10px 5px;
+          }
+        }
+      }
+
+      & .form-group-narrow {
+        @include left-full-width;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      & .existing-user-group-large-screen {
+        clear: both;
+      }
+
+      & .notice-acceptance-p {
+        float: left;
+        max-width: calc(100% - 40px);
+      }
+
+      & .notice-acceptance-input {
+        float: left;
+        margin-top: 1px;
+        width: 18px;
+      }
+
+      & .btn-link {
+        color: #00695f;
+        margin-left: 50px;
+      }
+
+      & .btn-submit {
+        float: right;
+        margin: 10px 5px 0 5px;
+      }
+
+      & .expandable-section-container {
+        & .section-header {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  & .btn-remove-user {
+    float: right;
+    margin-right: 15px;
+    margin-top: 10px;
+  }
+
+  & .btn-add-user {
+    float: right;
+    margin-right: 15px;
+    clear: both;
+  }
+
+  & .modal-header {
+    color: #eee;
+    @include colt-light-green-bg;
+  }
+
+  & .footer {
+    @include colt-light-green-bg;
+  }
+}
+
+.word-break {
+  /* Warning: Needed for oldIE support, but words are broken up letter-by-letter */
+  -ms-word-break: break-all;
+  word-break: break-all;
+  /* Non standard for webkit */
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.label-success,
+.notifications .success {
+  background-color: #5cb85c;
+}
+.label-warning,
+.notifications .warning {
+  background-color: #df8a13;
+}
+.label-danger,
+.notifications .error {
+  background-color: #b52b27;
+}
+.label-info {
+  background-color: #28a1c5;
+}
+
+/* FORM ELEMENTS - _forms.scss */
+@import "_colt-forms";
+
+@media only screen and (max-width: 52rem) {
+  form .form-group .existing-user-group-small-screen {
+    display: block;
+    margin-top: -15px;
+  }
+
+  form .existing-user-group-large-screen {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 52rem) {
+  .hero-img.registration-hero-img {
+    background: url("../images/colt-header.jpg") center 100% no-repeat;
+  }
+
+  form .form-group .existing-user-group-small-screen {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 72rem) {
+  .registration-page .registration-container form .form-section .form-group.form-group-short.ocn-exists-group {
+    margin-top: 0 !important;
+  }
+
+  .ocn-input-container {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 77rem) {
+  .registration-page .lang-select #language-toolbar-button {
+    top: -1px;
+  }
+  
+  .registration-page .registration-container form .form-section .form-group .form-group-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 87rem) {
+  .registration-page .registration-container form .btn-link {
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+}
+

@@ -1,0 +1,2204 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app/components/registration/registration.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">app/components/registration/</a> registration.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">52.33% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>101/193</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.3% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>55/318</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>17/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">52.33% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>101/193</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">74×</span>
+<span class="cline-any cline-yes">74×</span>
+<span class="cline-any cline-yes">84×</span>
+<span class="cline-any cline-yes">72×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+angular.module('app')
+  .controller('RegistrationController', ['$scope', '$rootScope', 'LOCALES', '$translate', 'ApiService', '$uibModal', '$window', '$location', '$routeParams',
+    function($scope, $rootScope, LOCALES, $translate, ApiService, $uibModal, $window, $location, $routeParams) {
+&nbsp;
+      var self = this;
+      self._apiService = ApiService;
+&nbsp;
+      function getPostCodeRegExp (val) {
+        var locs = LOCALES.locales;
+        for (var a = 0; a &lt; locs.length; a++) {
+          if (locs[a]['key'] == val || locs[a]['value'] == val) {
+            return locs[a]['form-validation-rules']['postcode-regexp'];
+          }
+        }
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function setUpFormFields(data) {</span>
+        //Build Users Array
+<span class="fstat-no" title="function not covered" >        function setUpUsersArr () {</span>
+<span class="cstat-no" title="statement not covered" >          if (data.col_users.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.users = data.col_users.map(<span class="fstat-no" title="function not covered" >function (x, i) {</span></span>
+<span class="cstat-no" title="statement not covered" >              var selectedRoleTransLabel, selectedTitleTransLabel;</span>
+<span class="cstat-no" title="statement not covered" >              if (x.requested_role) {</span>
+<span class="cstat-no" title="statement not covered" >                for (var a = 0; a &lt; $scope.userRoles.length; a++) {</span>
+<span class="cstat-no" title="statement not covered" >                  if ($scope.userRoles[a].value == x.requested_role) {</span>
+<span class="cstat-no" title="statement not covered" >                    selectedRoleTransLabel = $scope.userRoles[a].label;</span>
+                  }
+                }
+              }
+<span class="cstat-no" title="statement not covered" >              if (x.title) {</span>
+<span class="cstat-no" title="statement not covered" >                for (var a = 0; a &lt; $scope.titles.length; a++) {</span>
+<span class="cstat-no" title="statement not covered" >                  if ($scope.titles[a].value == x.title) {</span>
+<span class="cstat-no" title="statement not covered" >                    selectedTitleTransLabel = $scope.titles[a].label;</span>
+                  }
+                }
+              }
+              
+<span class="cstat-no" title="statement not covered" >              return ({</span>
+                "number": i + 1,
+                "id": x.id || '',
+                "UserInfoNewColId": x.new_col_id,
+                "selectedRole": x.requested_role || '',
+                "translatedSelectedRoleLabel": (x.requested_role) ? $translate.instant(selectedRoleTransLabel).toString(): '',
+                "UserInfoTitle": (x.title) ? {value: x.title}: {value: ''},
+                "translatedUserInfoTitleLabel": (x.title) ? $translate.instant(selectedTitleTransLabel).toString(): '',
+                "UserInfoFullNameAdmin": x.forename + ' ' + x.surname || '',
+                "UserInfoTelephone": x.telephone || '',
+                "UserColtOnlinePortalDisplayLanguage": {'value': x.language, 'label': x.language},
+                "UserInfoColtOnlineUserIDAdmin": x.existing_col_id || '',
+                "UserInfoEmail": x.email || ''
+              });
+            });
+<span class="cstat-no" title="statement not covered" >            $scope.latestUserNumber = $scope.users.length + 1;</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            $scope.users = [</span>
+              {
+                'number': 1,
+                'UserInfoColtOnlineUserIDAdmin': '',
+                'selectedRole': 'Full',
+                'UserInfoFullNameAdmin': '',
+                'UserInfoTitle': {'value':''},
+                'UserInfoEmail': '',
+                'UserInfoTelephone': '',
+                'UserColtOnlinePortalDisplayLanguage': {'value':''},
+                'detailsComplete': false
+              }
+            ];
+<span class="cstat-no" title="statement not covered" >            $scope.latestUserNumber = 1;</span>
+          }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (data != '') {</span>
+<span class="cstat-no" title="statement not covered" >          setUpUsersArr();</span>
+<span class="cstat-no" title="statement not covered" >          $scope.OCN = data.ocn || '',</span>
+          $scope.ContactName = data.primary_contact_name || '',
+          $scope.ContactPhoneNumber = data.primary_contact_tel || '',
+          $scope.ContactEmail = data.primary_contact_email || '',
+          $scope.CompanyName = data.company_name || '',
+          $scope.VATNumber = data.vat_number || '',
+          $scope.PremisesNumber = data.primary_contact_email || '',
+          $scope.CompanyStreetName = data.address_street || '',
+          $scope.CompanyPostCode = data.address_postcode || '',
+          $scope.CompanyCity = data.address_city || '',
+          $scope.CompanyProvince = data.address_county || '',
+          $scope.RefBCN = data.reference_bcn || '',
+          $scope.OCNNumberExists = (data.ocn.length &gt; 0) ? true: false,
+          $scope.NewBillingDetails = (data.reference_bcn) ? false: true;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          $scope.detectCurrentFormSection();</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >          $scope.ContactDetailsComplete = false,</span>
+          $scope.CompanyDetailsComplete = false,
+          $scope.NewBillingDetails = false,
+          $scope.NewBillingDetailsComplete = false,
+          $scope.LegalNoticeAccepted = false,
+          $scope.FormSubmissionAttempted = false,
+          $scope.latestUserNumber = 1;
+        }
+  
+<span class="cstat-no" title="statement not covered" >        $scope.selectedVals = {</span>
+          CompanyCountry: {country: data.address_country || ''},
+          CompanyLanguage: {label: data.language || ''}
+        };
+<span class="cstat-no" title="statement not covered" >        $scope.billingAddressFields = {</span>
+          'BillingPremiseNumber': {
+            'required': true,
+            'value': data.billing_address_premise_no || ''
+          },
+          'BillingStreetName': {
+            'required': true,
+            'value': data.billing_address_street || ''
+          },
+          'BillingPostCode': {
+            'required': true,
+            'value': data.billing_address_postcode || ''
+          },
+          'BillingCity': {
+            'required': true,
+            'value': data.billing_address_city || ''
+          },
+          'BillingProvince': {
+            'required': true,
+            'value': data.billing_address_county || ''
+          },
+          'BankName': {
+            'required': true,
+            'value': data.billing_bank_name || ''
+          },
+          'AccountName': {
+            'required': true,
+            'value': data.billing_account_name || ''
+          },
+          'PaymentMethod': {
+            'required': true,
+            'value': data.billing_payment_method || ''
+          },
+          'BranchName': {
+            'required': true,
+            'value': data.billing_branch_name || ''
+          },
+          'SortCode': {
+            'required': true,
+            'value': data.billing_sort_code || ''
+          },
+          'IBAN': {
+            'required': true,
+            'value': data.billing_iban || ''
+          },
+          'BIC': {
+            'required': true,
+            'value': data.billing_bic || ''
+          },
+          'BillingCountry': {
+            'required': true,
+            'value': data.billing_address_country || '',
+            'country': data.billing_address_country || ''
+          }
+        };
+<span class="cstat-no" title="statement not covered" >        $scope.invoiceDetailsFields = {</span>
+          'InvoiceTitle': {
+            'required': true,
+            'value': data.invoice_title || ''
+          },
+          'InvoiceName': {
+            'required': true,
+            'value': data.invoice_contact_name || ''
+          },
+          'PO': {
+            'required': true,
+            'value': data.invoice_po_number || ''
+          },
+          'InvoiceEmailAddress': {
+            'required': true,
+            'value': data.invoice_email_address || ''
+          },
+          'CustomerReference': {
+            'required': true,
+            'value': data.invoice_customer_ref || ''
+          },
+          'InvoiceTelephoneNumber': {
+            'required': true,
+            'value': data.invoice_tel || ''
+          },
+          'Currency': {
+            'required': true,
+            'value': data.invoice_currency || ''
+          },
+          'InvoiceLanguage': {
+            'required': true,
+            'value': data.invoice_language || ''
+          }
+        };
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function resetFormData () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.OCN = '',</span>
+        $scope.ContactName = '',
+        $scope.ContactPhoneNumber = '',
+        $scope.ContactEmail = '',
+        $scope.CompanyName = '',
+        $scope.VATNumber = '',
+        $scope.PremisesNumber = '',
+        $scope.CompanyStreetName = '',
+        $scope.CompanyPostCode = '',
+        $scope.CompanyCity = '',
+        $scope.CompanyProvince = '',
+        $scope.CompanyCountry = null,
+        $scope.CompanyLanguage = null;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        setUpFormFields('');</span>
+      }
+&nbsp;
+      $scope.detectCurrentFormSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        if ($scope.OCN == '') {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 1;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (!$scope.ContactDetailsComplete) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 2;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (!$scope.CompanyDetailsComplete) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 3;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (($scope.NewBillingDetails &amp;&amp; !$scope.NewBillingDetailsComplete &amp;&amp; $scope.RefBCN.length == 0) || (!$scope.NewBillingDetails &amp;&amp; ($scope.registrationForm.ReferenceBCN.length == 0 || $scope.registrationForm.ReferenceBCN.$invalid))) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 4;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if ($scope.registrationForm.InvoiceEmailAddress.$invalid || $scope.registrationForm.InvoiceTelephoneNumber.$invalid) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 5;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if ($scope.users[$scope.users.length - 1].detailsComplete == false) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 6;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (!$scope.LegalNoticeAccepted) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.currentFormSection = 7;</span>
+        }
+      }
+&nbsp;
+      $scope.showFormModal = <span class="fstat-no" title="function not covered" >function (status) {</span>
+<span class="cstat-no" title="statement not covered" >        var title, message;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (status == 'success') {</span>
+<span class="cstat-no" title="statement not covered" >          title = $translate.instant("registration.popup-labels.success-header").toString();</span>
+<span class="cstat-no" title="statement not covered" >          message = $translate.instant("registration.popup-labels.success-message").toString();</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (status == 'save') {</span>
+<span class="cstat-no" title="statement not covered" >          title = $translate.instant("registration.popup-labels.save-success-header").toString();</span>
+<span class="cstat-no" title="statement not covered" >          message = $translate.instant("registration.popup-labels.save-success-message").toString();</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (status == 'privacy-link') {</span>
+<span class="cstat-no" title="statement not covered" >          title = $translate.instant("registration.form-labels.legal-notice-header").toString();</span>
+<span class="cstat-no" title="statement not covered" >          message = $translate.instant("registration.popup-labels.legal-notice-message").toString();</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (status == 'error') {</span>
+<span class="cstat-no" title="statement not covered" >          title = $translate.instant("registration.popup-labels.error-header").toString();</span>
+<span class="cstat-no" title="statement not covered" >          message = $translate.instant("registration.popup-labels.error-message").toString();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var modalInstance = $uibModal.open({</span>
+          backdrop: 'static',
+          animation: true,
+          component: 'registrationSubmissionReceivedModalComponent',
+          resolve: {
+            messages: <span class="fstat-no" title="function not covered" >function () {<span class="cstat-no" title="statement not covered" ></span>return {Title: title, Message: message}}</span>
+          }
+        });
+      }
+&nbsp;
+      $scope.$watch('[ContactName, ContactPhoneNumber, ContactEmail]', function (newVal, oldVal, scope) {
+        var name = newVal[0];
+        var phone = newVal[1];
+        var email = newVal[2];
+        if (name != '' &amp;&amp; typeof(name) !== 'undefined' &amp;&amp; phone != '' &amp;&amp; typeof(phone) !== 'undefined' &amp;&amp; email != '' &amp;&amp; typeof(email) !== 'undefined') {
+          $scope.ContactDetailsComplete = true;
+        } else {
+          $scope.ContactDetailsComplete = false;
+        }
+      });
+&nbsp;
+      $scope.$watch('[CompanyName, selectedVals.CompanyCountry, selectedVals.CompanyLanguage, PremisesNumber, CompanyStreetName, CompanyPostCode, CompanyProvince, VATNumber]', function (newVal, oldVal, scope) {
+        var CompanyName = newVal[0];
+        var CompanyCountry = newVal[1];
+        var CompanyLanguage = newVal[2];
+        var PremisesNumber = newVal[3];
+        var CompanyStreetName = newVal[4];
+        var CompanyPostCode = newVal[5];
+        var CompanyProvince = newVal[6];
+        var VATNumber = newVal[7];
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!$scope.OCNNumberExists
+        &amp;&amp; CompanyName != '' &amp;&amp; typeof(CompanyName) !== 'undefined' 
+        &amp;&amp; CompanyCountry != '' &amp;&amp; typeof(CompanyCountry) !== 'undefined' 
+        &amp;&amp; <span class="branch-5 cbranch-no" title="branch not covered" >CompanyLanguage != '' </span>&amp;&amp; <span class="branch-6 cbranch-no" title="branch not covered" >typeof(CompanyLanguage) !== 'undefined'</span>
+        &amp;&amp; <span class="branch-7 cbranch-no" title="branch not covered" >PremisesNumber != '' </span>&amp;&amp; <span class="branch-8 cbranch-no" title="branch not covered" >typeof(PremisesNumber) !== 'undefined'</span>
+        &amp;&amp; <span class="branch-9 cbranch-no" title="branch not covered" >CompanyStreetName != '' </span>&amp;&amp; <span class="branch-10 cbranch-no" title="branch not covered" >typeof(CompanyStreetName) !== 'undefined'</span>
+        &amp;&amp; <span class="branch-11 cbranch-no" title="branch not covered" >CompanyPostCode != '' </span>&amp;&amp; <span class="branch-12 cbranch-no" title="branch not covered" >typeof(CompanyPostCode) !== 'undefined'</span>
+        &amp;&amp; <span class="branch-13 cbranch-no" title="branch not covered" >CompanyProvince != '' </span>&amp;&amp; <span class="branch-14 cbranch-no" title="branch not covered" >typeof(CompanyProvince) !== 'undefined'</span>
+        &amp;&amp; <span class="branch-15 cbranch-no" title="branch not covered" >VATNumber != '' </span>&amp;&amp; <span class="branch-16 cbranch-no" title="branch not covered" >typeof(VATNumber) !== 'undefined')</span> {
+<span class="cstat-no" title="statement not covered" >          scope.CompanyDetailsComplete = true;</span>
+        }
+        else <span class="missing-if-branch" title="if path not taken" >I</span>if ($scope.OCNNumberExists
+          &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >CompanyCountry != '' </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >typeof(CompanyCountry) !== 'undefined' </span>
+          &amp;&amp; <span class="branch-3 cbranch-no" title="branch not covered" >CompanyLanguage != '' </span>&amp;&amp; <span class="branch-4 cbranch-no" title="branch not covered" >typeof(CompanyLanguage) !== 'undefined')</span> {
+<span class="cstat-no" title="statement not covered" >            scope.CompanyDetailsComplete = true; </span>
+          } else {
+          scope.CompanyDetailsComplete = false;
+        }
+      });
+&nbsp;
+      $scope.$watch('billingAddressFields', function (newValue, oldValue, scope) {
+        var NewBillingDetailsComplete = true;
+        for (var prop in $scope.billingAddressFields) {
+<span class="cstat-no" title="statement not covered" >          if (prop != 'selectedVals') {</span>
+<span class="cstat-no" title="statement not covered" >            var obj = $scope.billingAddressFields[prop];</span>
+            
+<span class="cstat-no" title="statement not covered" >            if (obj.required == true &amp;&amp; (obj.value == '' || typeof(obj.value) === 'undefined')) {</span>
+<span class="cstat-no" title="statement not covered" >              NewBillingDetailsComplete = false;</span>
+            }
+          }
+        }
+        $scope.NewBillingDetailsComplete = NewBillingDetailsComplete;
+      }, true);
+&nbsp;
+      $scope.$watch('selectedVals.CompanyCountry', function (newVal, oldVal, scope) {
+        if (newVal === oldVal || newVal == '') {
+          return;
+        }
+&nbsp;
+        scope.companyPostCodeRegExp = getPostCodeRegExp(newVal.label);
+        scope.billingPostCodeRegExp = getPostCodeRegExp(newVal.label);
+&nbsp;
+        scope.billingAddressFields['BillingCountry'].value = newVal.label;
+<span class="cstat-no" title="statement not covered" >        scope.billingAddressFields['BillingCountry'].country = newVal.country;</span>
+      });
+&nbsp;
+      $scope.$watch('billingAddressFields.BillingCountry', function (newVal, oldVal, scope) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (newVal === oldVal || <span class="branch-1 cbranch-no" title="branch not covered" >newVal == '')</span> {
+          return;
+        }
+<span class="cstat-no" title="statement not covered" >        scope.billingPostCodeRegExp = getPostCodeRegExp(newVal.label);</span>
+      });
+&nbsp;
+      $scope.$watch('OCN', function (newVal, oldVal, scope) {
+        if (newVal === oldVal) {
+          return false;
+        }
+        
+        $scope.OCNNumberExists = (typeof(newVal) !== 'undefined' &amp;&amp; newVal.length &gt; 0) ? true: <span class="branch-1 cbranch-no" title="branch not covered" >false;</span>
+      });
+&nbsp;
+      $scope.$watch('CopyCompanyAddress', function (newVal, oldVal, scope) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (newVal === oldVal) {
+          return false;
+        }
+<span class="cstat-no" title="statement not covered" >        if (newVal == true) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingPremiseNumber'].value = (typeof($scope.PremisesNumber) === 'undefined') ? '': $scope.PremisesNumber;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingStreetName'].value = (typeof($scope.CompanyStreetName) === 'undefined') ? '': $scope.CompanyStreetName;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingPostCode'].value = (typeof($scope.CompanyPostCode) === 'undefined') ? '': $scope.CompanyPostCode;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingCity'].value = (typeof($scope.CompanyCity) === 'undefined') ? '': $scope.CompanyCity;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingProvince'].value = (typeof($scope.CompanyProvince) === 'undefined') ? '': $scope.CompanyProvince;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingCountry'].value = ($scope.selectedVals.CompanyCountry === null) ? '': $scope.selectedVals.CompanyCountry.country;</span>
+<span class="cstat-no" title="statement not covered" >          $scope.billingAddressFields['BillingCountry'].country = ($scope.selectedVals.CompanyCountry === null) ? '': $scope.selectedVals.CompanyCountry.country;</span>
+        }
+      });
+&nbsp;
+      $scope.toggleNewBillingBool = function (bool) {
+        $scope.NewBillingDetails = bool;
+      }
+&nbsp;
+      $scope.addUser = function () {
+        if ($scope.users.length &lt; 5) {
+          var userNum = $scope.users.length + 1;
+          $scope.users.push({
+            'number': userNum,
+            'UserInfoColtOnlineUserIDAdmin': '',
+            'UserInfoFullNameAdmin': '',
+            'UserInfoTitle': {'value':''},
+            'UserInfoEmail': '',
+            'UserInfoTelephone': '',
+            'UserColtOnlinePortalDisplayLanguage': {'value':''},
+            'SelectedRole': '',
+            'detailsComplete': false
+          });
+          $scope.latestUserNumber += 1; 
+        }
+      }
+&nbsp;
+      $scope.removeUser = function (user) {
+        var indToRemove = null;
+        
+        for (var a = 0; a &lt; $scope.users.length; a++) {
+          if ($scope.users[a].number == user.number) {
+            indToRemove = a;
+          }
+        }
+        
+        $scope.users.splice(indToRemove, 1);
+&nbsp;
+        for (var a = 0; a &lt; $scope.users.length; a++) {
+          $scope.users[a].number = a + 1;
+        }
+&nbsp;
+        $scope.latestUserNumber -= 1; 
+      }
+&nbsp;
+      $scope.selectUserRole = <span class="fstat-no" title="function not covered" >function (user) {</span>
+<span class="cstat-no" title="statement not covered" >        var thisRole = user.selectedRole.value;</span>
+<span class="cstat-no" title="statement not covered" >        for (var a = 0; a &lt; $scope.userRoles.length; a++) {</span>
+<span class="cstat-no" title="statement not covered" >          if ($scope.userRoles[a].value == thisRole) {</span>
+<span class="cstat-no" title="statement not covered" >            user.translatedSelectedRoleLabel = $translate.instant($scope.userRoles[a].label).toString();</span>
+          }
+        }
+      }
+&nbsp;
+      $scope.selectUserTitle = <span class="fstat-no" title="function not covered" >function (user) {</span>
+<span class="cstat-no" title="statement not covered" >        var thisTitle = user.UserInfoTitle.value;</span>
+<span class="cstat-no" title="statement not covered" >        for (var a = 0; a &lt; $scope.titles.length; a++) {</span>
+<span class="cstat-no" title="statement not covered" >          if ($scope.titles[a].value == thisTitle) {</span>
+<span class="cstat-no" title="statement not covered" >            user.translatedUserInfoTitleLabel = $translate.instant($scope.titles[a].label).toString();</span>
+          }
+        }
+      }
+&nbsp;
+      $scope.processForm = function (form, state) {
+        $scope.FormSubmissionAttempted = (state == 'save') ? <span class="branch-0 cbranch-no" title="branch not covered" >false:</span> true;
+        
+        /*
+        var systemUsersArr = $scope.users.map((x) =&gt;
+          ({
+            "id": '',
+            "new_col_id": (x.UserInfoColtOnlineUserIDAdmin.length &gt; 0),
+            "requested_role": x.selectedRole,
+            "title": x.UserInfoTitle,
+            "forename": x.UserInfoFullNameAdmin.split(" ")[0],
+            "surname": (x.UserInfoFullNameAdmin.split(" ").length &gt; 1) ? x.UserInfoFullNameAdmin.split(" ")[x.UserInfoFullNameAdmin.split(" ").length - 1]: '',
+            "telephone": x.UserInfoTelephone || '',
+            "language": x.UserColtOnlinePortalDisplayLanguage.value,
+            "existing_col_id": x.UserInfoColtOnlineUserIDAdmin || '',
+            "email": x.UserInfoEmail || ''
+          })
+        );
+        
+        var obj = {
+          "ocn": $scope.OCN,
+          "primary_contact_name": $scope.ContactName,
+          "primary_contact_tel": $scope.ContactPhoneNumber,
+          "primary_contact_email": $scope.ContactEmail,
+          "company_name": $scope.CompanyName || '',
+          "vat_number": $scope.VATNumber || '',
+          "address_premise_no": $scope.PremisesNumber || '',
+          "address_street": $scope.CompanyStreetName || '',
+          "address_postcode": $scope.CompanyPostCode || '',
+          "address_city": $scope.CompanyCity || '',
+          "address_county": $scope.CompanyProvince || '',
+          "address_country": $scope.selectedVals.CompanyCountry.country || '',
+          "language": $scope.selectedVals.CompanyLanguage.value || '',
+          "reference_bcn": $scope.RefBCN || '',
+          "invoice_title": $scope.invoiceDetailsFields.InvoiceTitle.value,
+          "invoice_contact_name": $scope.invoiceDetailsFields.InvoiceName.value,
+          "invoice_po_number": $scope.invoiceDetailsFields.PO.value,
+          "invoice_email_address": $scope.invoiceDetailsFields.InvoiceEmailAddress.value,
+          "invoice_customer_ref": $scope.invoiceDetailsFields.CustomerReference.value,
+          "invoice_tel": $scope.invoiceDetailsFields.InvoiceTelephoneNumber.value,
+          "invoice_currency": $scope.invoiceDetailsFields.Currency.value,
+          "invoice_language": $scope.invoiceDetailsFields.InvoiceLanguage.value,
+          "billing_address_premise_no": $scope.billingAddressFields.BillingPremiseNumber.value,
+          "billing_address_street": $scope.billingAddressFields.BillingStreetName.value,
+          "billing_address_postcode": $scope.billingAddressFields.BillingPostCode.value,
+          "billing_address_city": $scope.billingAddressFields.BillingCity.value,
+          "billing_address_county": $scope.billingAddressFields.BillingProvince.value,
+          "billing_address_country": $scope.billingAddressFields.BillingCountry.country,
+          "billing_bank_name": $scope.billingAddressFields.BankName.value,
+          "billing_account_name": $scope.billingAddressFields.AccountName.value,
+          "billing_payment_method": $scope.billingAddressFields.PaymentMethod.value,
+          "billing_branch_name": $scope.billingAddressFields.BranchName.value,
+          "billing_sort_code": $scope.billingAddressFields.SortCode.value,
+          "billing_iban": $scope.billingAddressFields.IBAN.value,
+          "billing_bic": $scope.billingAddressFields.BIC.value,
+          "last_updated": "",
+          "col_users": systemUsersArr
+        };
+&nbsp;
+        console.log(obj);
+        */
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!form.$valid &amp;&amp; state == 'submit') {
+<span class="cstat-no" title="statement not covered" >          $window.scrollTo(0, 0);</span>
+<span class="cstat-no" title="statement not covered" >          $scope.detectCurrentFormSection();</span>
+        } else {
+          var systemUsersArr = $scope.users.map(<span class="fstat-no" title="function not covered" >function (x) {</span>
+<span class="cstat-no" title="statement not covered" >            ({</span>
+              "id": '',
+              "new_col_id": (x.UserInfoColtOnlineUserIDAdmin.length &gt; 0),
+              "requested_role": x.selectedRole,
+              "title": x.UserInfoTitle.value,
+              "forename": x.UserInfoFullNameAdmin.split(" ")[0],
+              "surname": (x.UserInfoFullNameAdmin.split(" ").length &gt; 1) ? x.UserInfoFullNameAdmin.split(" ")[x.UserInfoFullNameAdmin.split(" ").length - 1]: '',
+              "telephone": x.UserInfoTelephone,
+              "language": x.UserColtOnlinePortalDisplayLanguage.value,
+              "existing_col_id": x.UserInfoColtOnlineUserIDAdmin,
+              "email": x.UserInfoEmail
+            })
+          });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var data = {</span>
+            "colt_creator": "DUMMY VAL",
+            "ocn": $scope.OCN || '',
+            "primary_contact_name": $scope.ContactName || '',
+            "primary_contact_tel": $scope.ContactPhoneNumber || '',
+            "primary_contact_email": $scope.ContactEmail || '',
+            "company_name": $scope.CompanyName || '',
+            "vat_number": $scope.VATNumber || '',
+            "address_premise_no": $scope.PremisesNumber || '',
+            "address_street": $scope.CompanyStreetName || '',
+            "address_postcode": $scope.CompanyPostCode || '',
+            "address_city": $scope.CompanyCity || '',
+            "address_county": $scope.CompanyProvince || '',
+            "address_country": $scope.selectedVals.CompanyCountry.country || '',
+            "language": $scope.selectedVals.CompanyLanguage.value || '',
+            "reference_bcn": $scope.RefBCN || '',
+            "invoice_title": $scope.invoiceDetailsFields.InvoiceTitle.value || '',
+            "invoice_contact_name": $scope.invoiceDetailsFields.InvoiceName.value || '',
+            "invoice_po_number": $scope.invoiceDetailsFields.PO.value || '',
+            "invoice_email_address": $scope.invoiceDetailsFields.InvoiceEmailAddress.value || '',
+            "invoice_customer_ref": $scope.invoiceDetailsFields.CustomerReference.value || '',
+            "invoice_tel": $scope.invoiceDetailsFields.InvoiceTelephoneNumber.value || '',
+            "invoice_currency": $scope.invoiceDetailsFields.Currency.value || '',
+            "invoice_language": $scope.invoiceDetailsFields.InvoiceLanguage.value || '',
+            "billing_address_premise_no": $scope.billingAddressFields.BillingPremiseNumber.value || '',
+            "billing_address_street": $scope.billingAddressFields.BillingStreetName.value || '',
+            "billing_address_postcode": $scope.billingAddressFields.BillingPostCode.value || '',
+            "billing_address_city": $scope.billingAddressFields.BillingCity.value || '',
+            "billing_address_county": $scope.billingAddressFields.BillingProvince.value || '',
+            "billing_address_country": $scope.billingAddressFields.BillingCountry.country || '',
+            "billing_bank_name": $scope.billingAddressFields.BankName.value || '',
+            "billing_account_name": $scope.billingAddressFields.AccountName.value || '',
+            "billing_payment_method": $scope.billingAddressFields.PaymentMethod.value || '',
+            "billing_branch_name": $scope.billingAddressFields.BranchName.value || '',
+            "billing_sort_code": $scope.billingAddressFields.SortCode.value || '',
+            "billing_iban": $scope.billingAddressFields.IBAN.value || '',
+            "billing_bic": $scope.billingAddressFields.BIC.value || '',
+            "last_updated": "",
+            "col_users": systemUsersArr
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          ApiService.createRegistration(data).then(<span class="fstat-no" title="function not covered" >function (d) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (state == 'submit') {</span>
+<span class="cstat-no" title="statement not covered" >              resetFormData();</span>
+<span class="cstat-no" title="statement not covered" >              $scope.showFormModal('success');</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              $scope.showFormModal('save-success');</span>
+            }
+          }, <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.showFormModal('error');</span>
+<span class="cstat-no" title="statement not covered" >            $window.scrollTo(0, 0);</span>
+          });
+        }
+      }
+&nbsp;
+      function init () {
+        $scope.logo = "assets/images/colt-logo-light@2x.png";
+        $scope.loading = false;
+&nbsp;
+        $scope.titles = [
+          {
+            'label': "registration.form-labels.title-sir",
+            'value': "Sir"
+          },
+          {
+            'label': "registration.form-labels.title-mr",
+            'value': "Mr"
+          },
+          {
+            'label': "registration.form-labels.title-mrs",
+            'value': "Mrs"
+          },
+          {
+            'label': "registration.form-labels.title-miss",
+            'value': "Miss"
+          },
+          {
+            'label': "registration.form-labels.title-ms",
+            'value': "Ms"
+          }
+        ];
+        $scope.userRoles = [
+          {
+            'label': "registration.form-labels.full",
+            'description': "registration.form-labels.full-role-description",
+            'value': 'Full',
+            'selected': true
+          },
+          {
+            'label': "registration.form-labels.primary",
+            'description': "registration.form-labels.primary-role-description",
+            'value': 'Primary'
+          },
+          {
+            'label': "registration.form-labels.flex",
+            'description': "registration.form-labels.flex-role-description",
+            'value': 'Flex'
+          },
+          {
+            'label': "registration.form-labels.read-only",
+            'description': "registration.form-labels.read-only-role-description",
+            'value': 'Read Only'
+          }
+        ];
+        $scope.languages = [
+          {
+            'label': "English",
+            'value': "English",
+            'country': "England",
+            'selected': true
+          },
+          {
+            'label': "Deutsch",
+            'value': "German",
+            'country': "Germany"
+          },
+          {
+            'label': "Español",
+            'value': "Spanish",
+            'country': "Spain"
+          },
+          {
+            'label': "Français",
+            'value': "French",
+            'country': "France"
+          },
+          {
+            'label': "Italiano",
+            'value': "Italian",
+            'country': "Italy"
+          },
+          {
+            'label': "日本語",
+            'value': "Japanese",
+            'country': "Japan"
+          }
+        ];
+        $scope.currencies = [
+          {
+            'label': 'GBP'
+          },
+          {
+            'label': 'EUR'
+          },
+          {
+            'label': 'JPY'
+          }
+        ];
+&nbsp;
+        $scope.postCodeRegExp = getPostCodeRegExp(LOCALES.preferredLocale);
+        $scope.companyPostCodeRegExp = getPostCodeRegExp(LOCALES.preferredLocale);
+        $scope.billingPostCodeRegExp = getPostCodeRegExp(LOCALES.preferredLocale);
+        $scope.latestUserNumber = 1;
+        $scope.currentFormSection = 1;
+        $scope.emailRegExp = "(([^&lt;&gt;()\\[\\]\\.,;:\\s@\"]+(\\.[^&lt;&gt;()\\[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@(([^&lt;&gt;()[\\]\\.,;:\\s@\"]+\\.)+[^&lt;&gt;()[\\]\\.,;:\\s@\"]{2,})$";
+        $scope.phoneNumRegExp = "(?=.*\\d)[\\d ]+$";
+        $scope.refBCNRegExp = /^[0-9]{6}$/;
+        $scope.guid = $routeParams.guid;
+&nbsp;
+        ApiService.getGuid($scope.guid).then(<span class="fstat-no" title="function not covered" >function (data) {</span>
+<span class="cstat-no" title="statement not covered" >          console.log(data);</span>
+<span class="cstat-no" title="statement not covered" >          setUpFormFields(data);</span>
+        }, function (err) {
+          
+        });
+        //setUpFormFields({"status":"WITH_CUSTOMER","id":223911,"col_users":[{"id":223912,"new_col_id":false,"requested_role":"Flex","forename":"name","surname":"surname","language":"English","existing_col_id":"ex ID","email":"email"},{"id":223913,"new_col_id":true,"requested_role":"Primary","forename":"name 2","surname":"surname 2","language":"English","existing_col_id":"ex 2","email":"email 2"}],"guid":"247bf318-388b-46aa-80af-f5d6b4444c92","colt_creator":"coltCreater","ocn":"A32432R","sales_channel":"AGT","colt_account_manager":"Gerri Wolfman","company_name":"Ciena","address_premise_no":"12","address_street":"Upper Street","address_postcode":"SW19 2WE","address_city":"London","address_county":"Sutton","address_country":"UK","language":"English","invoice_contact_name":"invoice amanger","invoice_po_number":"PO 12908/454","invoice_email_address":"invoiceEmailAddress","invoice_customer_ref":"ref 45456","invoice_currency":"GBP","invoice_language":"Japanese","billing_address_premise_no":"12","billing_address_street":"Leighman Court","billing_address_postcode":"M12 23d","billing_address_city":"Manchester","billing_address_county":"Miodlands","billing_address_country":"UK","billing_bank_name":"London Blue Bank","billing_payment_method":"Cash","billing_branch_name":"Center","billing_sort_code":"12-26-69","billing_iban":"UK 2156465465465465","billing_bic":"Bic-125","last_updated":"20171114T161342"});
+        //setUpFormFields({"status":"WITH_CUSTOMER","id":227884,"col_users":[],"guid":"74468896-d72f-455d-b759-2353e9492c09","colt_creator":"MD","ocn":"A123456","sales_channel":"AGT","colt_account_manager":"John Smith","company_name":"Company plc","language":"English","reference_bcn":"A12345","last_updated":"20171205T091615"});
+      }
+&nbsp;
+      init();
+  }
+&nbsp;
+  
+&nbsp;
+]);
+&nbsp;
+angular.module('app')
+  .controller('SystemUserController', ['$scope', '$rootScope',
+    function($scope, $rootScope) {
+    
+    $scope.$watch('[user.number, user.selectedRole, user.UserInfoTitle, user.UserInfoFullNameAdmin, user.UserInfoTelephone, user.UserInfoEmail, user.UserInfoColtOnlineUserIDAdmin, user.UserColtOnlinePortalDisplayLanguage]', function (newVal, oldVal, scope) {
+      var user = newVal;
+&nbsp;
+      for (var a = 0; a &lt; $scope.users.length; a++) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if ($scope.users[a]['number'] == newVal[0]) {
+          if ($scope.users[a].selectedRole != null &amp;&amp;
+            $scope.users[a].UserInfoTitle != null &amp;&amp;
+            $scope.users[a].UserInfoFullNameAdmin != '' &amp;&amp;
+            $scope.users[a].UserInfoTelephone != '' &amp;&amp;
+            $scope.users[a].UserInfoEmail != '' &amp;&amp;
+            typeof($scope.users[a].UserInfoEmail) !== 'undefined' &amp;&amp;
+            $scope.users[a].UserInfoColtOnlineUserIDAdmin != '' &amp;&amp;
+            $scope.users[a].UserColtOnlinePortalDisplayLanguage != null) {
+              $scope.users[a].detailsComplete = true;
+          } else <span class="missing-if-branch" title="if path not taken" >I</span>if ($scope.users[a].UserInfoColtOnlineUserIDAdmin != '' &amp;&amp;
+            $scope.users[a].UserInfoEmail != '' &amp;&amp;
+            typeof($scope.users[a].UserInfoEmail) !== 'undefined') {
+<span class="cstat-no" title="statement not covered" >            $scope.users[a].detailsComplete = true;  </span>
+          }else {
+            $scope.users[a].detailsComplete = false;
+          }
+        }
+      }
+      
+    });
+&nbsp;
+  }
+]);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 05 2017 11:29:23 GMT+0000 (GMT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

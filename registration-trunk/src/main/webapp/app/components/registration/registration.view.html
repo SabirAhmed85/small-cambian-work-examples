@@ -1,0 +1,455 @@
+<div class="registration-container col-md-12 col-sm-12 col-xs-12" ng-show="!loading">
+    <div class="form-intro">
+        <p translate="registration.form-labels.form-intro-paragraph-1"></p>
+        <p translate="registration.form-labels.form-intro-paragraph-2"></p>
+    </div>
+    <div class="form-intro form-intro-error" ng-if="FormSubmissionAttempted && !registrationForm.$valid">
+            <p translate="registration.form-labels.form-error-paragraph"></p>
+    </div>
+    <form name="registrationForm" name="form" role="form" ng-class="{'form-submission-attempted': FormSubmissionAttempted}">
+        <div class="form-section">
+            <label class="section-header">
+                <i class="fa fa-id-card-o header-icon"></i>
+                <span>OCN</span>
+            </label>
+
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label class="input-label">OCN</label>
+                <input type="text" name="OCN" id="OCN" ng-model="OCN" ng-pattern="ocnRegExp" class="form-control" ng-max="1000" ng-disabled="OCNExists==false"/>
+                <span class="field-error" ng-if="registrationForm.OCN.$invalid && registrationForm.OCN.$viewValue != null && registrationForm.OCN.$viewValue != ''" translate="registration.form-notifications.valid-ocn-note"></span>
+            </div>
+            <div class="form-group form-group-short col-md-5 col-sm-6 col-xs-12 ocn-exists-group">
+                <input type="checkbox" name="OCNExists" id="OCNExists" ng-checked="OCNExists==false" ng-click="setOCNExists()" ng-disabled="OCNExists == true"/>
+                <label class="input-label" translate="registration.form-labels.valid-ocn-not-present"></label>
+            </div>
+
+            <div ng-show="OCNExists == false">
+                <hr class="section-partition">
+                <label class="section-label section-error-label" translate="registration.form-labels.company-details-incomplete-note" ng-show="CompanyDetailsComplete != true && FormSubmissionAttempted"></label>            
+                
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.company-name"></label>
+                    <input type="text" ng-max="100" name="CompanyName" id="CompanyName" ng-model="CompanyName" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.company-name' | translate}}"/>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.company-country"></label>
+                    <ui-select search-enabled="false" ng-model="selectedVals.CompanyCountry" ng-required="true">
+                        <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                            <span ng-bind="selectedVals.CompanyCountry.country"></span>
+                        </ui-select-match>
+                        <ui-select-choices class="select-option" repeat="c in countryOptions">
+                            <div><strong ng-bind="c.country"></strong></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.language"></label>
+                    <ui-select search-enabled="false" ng-model="selectedVals.CompanyLanguage" ng-required="true">
+                        <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                            <span ng-bind="selectedVals.CompanyLanguage.label"></span>
+                        </ui-select-match>
+                        <ui-select-choices class="select-option" repeat="lang in languages">
+                            <div><strong ng-bind="lang.label"></strong></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <hr class="section-partition">
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.premises-number"></label>
+                    <input type="text" ng-max="10" name="PremisesNumber" id="PremisesNumber" ng-model="PremisesNumber" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.premises-number' | translate}}"/>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.street"></label>
+                    <input type="text" ng-max="100" name="CompanyStreetName" id="CompanyStreetName" ng-model="CompanyStreetName" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.street' | translate}}"/>
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.postcode"></label>
+                    <input type="text" name="CompanyPostCode" id="CompanyPostCode" ng-pattern="companyPostCodeRegExp" ng-model="CompanyPostCode" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.postcode' | translate}}"/>
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.city"></label>
+                    <input type="text" ng-max="100" ng-max="100" name="CompanyCity" id="CompanyCity" ng-model="CompanyCity" ng-pattern="letterAndSpaceOnlyRegExp" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.city' | translate}}"/>
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.company-province"></label>
+                    <input type="text" ng-max="100" name="CompanyProvince" id="CompanyProvince" ng-model="CompanyProvince" ng-pattern="letterAndSpaceOnlyRegExp" class="form-control" ng-required="!OCNExists" placeholder="{{'registration.form-labels.company-province' | translate}}"/>
+                </div>
+
+                <hr class="section-partition">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.vat-number"></label>
+                    <input type="text" ng-max="100" name="VATNumber" id="VATNumber" ng-model="VATNumber" class="form-control"/>
+                </div>
+                <!--
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.channel"></label>
+                    <ui-select search-enabled="false" ng-model="selectedVals.Channel" ng-required="true">
+                        <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                            <span ng-bind="translatedSelectedChannelLabel"></span>
+                        </ui-select-match>
+                        <ui-select-choices class="select-option" repeat="channel in channels">
+                            <div><strong translate="{{channel.label}}"></strong></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="field-error" ng-if="FormSubmissionAttempted && selectedVals.Channel == ''" translate="registration.form-notifications.valid-channel-note"></span>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label class="section-header">
+                <i class="fa fa-phone-square header-icon"></i>
+                <span translate="registration.form-labels.primary-contact"></span>
+            </label>
+            
+            <label class="section-label section-error-label" translate="registration.form-labels.contact-details-incomplete-note" ng-show="ContactDetailsComplete != true && FormSubmissionAttempted"></label>            
+
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label class="input-label" translate="registration.form-labels.name"></label>
+                <input type="text" ng-max="100" name="ContactName" id="ContactName" ng-model="ContactName" ng-pattern="letterAndSpaceOnlyRegExp" class="form-control"  required placeholder="{{'registration.form-labels.required' | translate}}"/>
+                <span class="field-error" ng-if="FormSubmissionAttempted && registrationForm.ContactName.$invalid" translate="registration.form-notifications.valid-name-note"></span>
+            </div>
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <label class="input-label"><span class="glyphicon glyphicon-phone-alt"></span><span translate="registration.form-labels.tel"></span></label>
+                <input type="text" ng-max="100" name="ContactPhoneNumber" id="ContactPhoneNumber" ng-pattern="phoneNumRegExp" ng-model="ContactPhoneNumber" class="form-control" required placeholder="{{'registration.form-labels.required' | translate}}"/>
+                <span class="field-error" ng-if="FormSubmissionAttempted && registrationForm.ContactPhoneNumber.$invalid" translate="registration.form-notifications.valid-phone-note"></span>
+            </div>
+            <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                <label class="input-label"><span class="glyphicon glyphicon-envelope"></span><span translate="registration.form-labels.email"></span></label>
+                <input type="ContactEmail" ng-max="100" name="ContactEmail" id="ContactEmail" ng-pattern="emailRegExp" ng-model="ContactEmail" class="form-control" required placeholder="{{'registration.form-labels.required' | translate}}"/>
+                <span class="field-error" ng-if="FormSubmissionAttempted && registrationForm.ContactEmail.$invalid" translate="registration.form-notifications.valid-email-note"></span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label class="section-header">
+                <i class="fa fa-credit-card header-icon"></i>
+                <span translate="registration.form-labels.billing-code"></span>
+            </label>
+
+            <label class="section-label section-error-label" translate="registration.form-labels.billing-details-incomplete-note" ng-show="((NewBillingDetails != true && RefBCN.length == 0) || (!NewBillingDetailsComplete && NewBillingDetails)) && FormSubmissionAttempted"></label>
+
+            <div class="form-group form-group-short col-md-12 col-sm-12 col-xs-12">
+                <input type="radio" name="NewBillingDetails" ng-click="toggleNewBillingBool(false)" ng-checked="NewBillingDetails == false"/>
+                <label class="input-label" translate="registration.form-labels.existing-billing-details"></label>
+
+                <div class="col-md-6 col-sm-12 col-xs-12" ng-hide="NewBillingDetails == true" style="margin-top: 10px;">
+                    <input type="text" ng-max="6" name="ReferenceBCN" id="ReferenceBCN" ng-pattern="refBCNRegExp" ng-model="RefBCN" class="form-control" ng-required="NewBillingDetails == false" placeholder="{{'registration.form-labels.billing-code' | translate}}"/>
+                    <span class="field-error" ng-if="registrationForm.ReferenceBCN.$invalid && registrationForm.ReferenceBCN.$viewValue != null && registrationForm.ReferenceBCN.$viewValue != ''" translate="registration.form-notifications.valid-referencebcn-note"></span>
+                    <span class="field-error" ng-if="FormSubmissionAttempted && NewBillingDetails == false && (registrationForm.ReferenceBCN.$viewValue == '' || registrationForm.ReferenceBCN.$viewValue == null)" translate="registration.form-notifications.empty-referencebcn-note"></span>
+                </div>
+            </div>
+            <div class="form-group form-group-short col-md-12 col-sm-12 col-xs-12">
+                <input type="radio" name="NewBillingDetails" ng-click="toggleNewBillingBool(true)" ng-checked="NewBillingDetails == true" ng-disabled="registrationForm.ReferenceBCN.$viewValue != ''"/>
+                <label class="input-label" translate="registration.form-labels.new-billing-details"></label>
+            </div>
+
+            <div ng-if="NewBillingDetails == true" style="margin: 10px;">
+                <label class="section-label col-md-12" translate="registration.form-labels.billing-address"></label>
+
+                <div class="form-group form-group-short col-md-5 col-sm-6 col-xs-12">
+                    <input type="radio" name="CopyCompanyAddress" ng-click="toggleCompanyAddressBool(true);" ng-model="page.CopyCompanyAddress" value="true" ng-checked="page.CopyCompanyAddress==true" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == null"/>
+                    <label class="input-label" translate="registration.form-labels.copy-company-address"></label>
+                </div>
+                <div class="form-group form-group-short col-md-5 col-sm-6 col-xs-12">
+                    <input type="radio" name="CopyCompanyAddress" ng-click="toggleCompanyAddressBool(false);" ng-model="page.CopyCompanyAddress" value="false" ng-checked="page.CopyCompanyAddress==false" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == null"/>
+                    <label class="input-label" translate="registration.form-labels.new-billing-address"></label>
+                </div>
+                <hr class="section-partition">
+
+                <div ng-if="page.CopyCompanyAddress == false">
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.billing-num"></label>
+                        <input type="text" ng-max="10" name="BillingPremiseNumber" id="BillingPremiseNumber" ng-model="billingAddressFields.BillingPremiseNumber.value" class="form-control" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false" placeholder="{{(NewBillingDetails == true && page.CopyCompanyAddress == false) ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.street"></label>
+                        <input type="text" ng-max="100" name="BillingStreetName" id="BillingStreetName" ng-model="billingAddressFields.BillingStreetName.value" class="form-control" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false" placeholder="{{(NewBillingDetails == true && page.CopyCompanyAddress == false) ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.postcode"></label>
+                        <input type="text" name="BillingPostCode" id="BillingPostCode" ng-pattern="billingPostCodeRegExp" ng-model="billingAddressFields.BillingPostCode.value" class="form-control" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false" placeholder="{{(NewBillingDetails == true && page.CopyCompanyAddress == false) ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+    
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.city"></label>
+                        <input type="text" ng-max="100" name="BillingCity" id="BillingCity" ng-model="billingAddressFields.BillingCity.value" ng-pattern="letterAndSpaceOnlyRegExp" class="form-control" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false" placeholder="{{(NewBillingDetails == true && page.CopyCompanyAddress == false) ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.company-province"></label>
+                        <input type="text" ng-max="100" name="BillingProvince" id="BillingProvince" ng-model="billingAddressFields.BillingProvince.value" ng-pattern="letterAndSpaceOnlyRegExp" class="form-control" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false" placeholder="{{(NewBillingDetails == true && page.CopyCompanyAddress == false) ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.company-country"></label>
+                        <ui-select search-enabled="false" ng-model="billingAddressFields.BillingCountry" ng-required="NewBillingDetails == true && page.CopyCompanyAddress == false">
+                            <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                                <span ng-bind="billingAddressFields.BillingCountry.country"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="c in countryOptions">
+                                <div><strong ng-bind="c.country"></strong></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    
+                </div>
+
+                <label class="section-label col-md-12" translate="registration.form-labels.billing-details"></label>
+
+                <div class="form-group form-group-short col-md-5 col-sm-12 col-xs-12">
+                    <label class="input-label" translate="registration.form-labels.select-a-payment-method"></label>
+                </div>
+
+                <div class="form-group form-group-short col-md-3 col-sm-6 col-xs-12">
+                    <input type="radio" name="PaymentMeth" id="PaymentMeth" ng-click="selectPaymentMethod('Direct Debit')" ng-checked="selectedVals.PaymentMethod.value == 'Direct Debit'" ng-required="NewBillingDetails == true && selectedVals.PaymentMethod.value == ''"/>
+                    <label class="input-label" translate="registration.form-labels.direct-debit"></label>
+                </div>
+
+                <div class="form-group form-group-short col-md-3 col-sm-6 col-xs-12">
+                    <input type="radio" name="PaymentMeth" id="PaymentMeth" ng-click="selectPaymentMethod('Bank Transfer')" ng-checked="selectedVals.PaymentMethod.value == 'Bank Transfer'" ng-required="NewBillingDetails == true && selectedVals.PaymentMethod.value == ''"/>
+                    <label class="input-label" translate="registration.form-labels.bank-transfer"></label>
+                </div>
+
+                <hr class="section-partition">
+
+                <div ng-if="selectedVals.PaymentMethod.value == 'Bank Transfer'">
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12" style="clear: left;">
+                        <label class="input-label" translate="registration.form-labels.bank-name"></label>
+                        <input type="text" ng-max="100" name="BankName" id="BankName" ng-model="billingAddressFields.BankName.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-8 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.account-name"></label>
+                        <input type="text" ng-max="100" name="AccountName" id="AccountName" ng-model="billingAddressFields.AccountName.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-8 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.branch"></label>
+                        <input type="text" ng-max="100" name="BranchName" id="BranchName" ng-model="billingAddressFields.BranchName.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.sort-code"></label>
+                        <input type="text" ng-max="100" name="SortCode" id="SortCode" ng-model="billingAddressFields.SortCode.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.iban"></label>
+                        <input type="text" ng-max="100" name="IBAN" id="IBAN" ng-model="billingAddressFields.IBAN.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.bic"></label>
+                        <input type="text" ng-max="100" name="BIC" id="BIC" ng-model="billingAddressFields.BIC.value" class="form-control" ng-required="RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer'" placeholder="{{(RefBCN.length == 0 && selectedVals.PaymentMethod.value == 'Bank Transfer') ? 'registration.form-labels.required' : '' | translate}}"/>
+                    </div>
+                </div>
+
+                <label class="section-label col-md-12" translate="registration.form-labels.invoice-details"></label>
+                <div class="form-group form-group-short col-md-12 col-sm-12 col-xs-12">
+                    <input type="checkbox" name="EnterInvoiceDetails" value="true" ng-value="true" id="EnterInvoiceDetails" ng-model="page.EnterInvoiceDetails"/>
+                    <label class="input-label" translate="registration.form-labels.invoice-details-relevant"></label>
+                </div>
+                <hr class="section-partition">
+
+                <div ng-if="page.EnterInvoiceDetails == true">
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.title"></label>
+                        <input type="text" ng-max="100" name="InvoiceTitle" id="InvoiceTitle" ng-model="invoiceDetailsFields.InvoiceTitle.value" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.name"></label>
+                        <input type="text" ng-max="100" name="InvoiceName" id="InvoiceName" ng-model="invoiceDetailsFields.InvoiceName.value" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.po"></label>
+                        <input type="text" ng-max="100" name="PO" id="PO" ng-model="invoiceDetailsFields.PO.value" class="form-control"/>
+                    </div>
+    
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.email"></label>
+                        <input type="text" name="InvoiceEmailAddress" id="InvoiceEmailAddress" ng-pattern="emailRegExp" ng-model="invoiceDetailsFields.InvoiceEmailAddress.value" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.ref-shorthand"></label>
+                        <input type="text" ng-max="100" name="CustomerReference" id="CustomerReference" ng-model="invoiceDetailsFields.CustomerReference.value" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.tel"></label>
+                        <input type="text" ng-max="100" name="InvoiceTelephoneNumber" id="InvoiceTelephoneNumber" ng-pattern="phoneNumRegExp" ng-model="invoiceDetailsFields.InvoiceTelephoneNumber.value" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.currency"></label>
+                        <ui-select search-enabled="false" ng-model="invoiceDetailsFields.Currency">
+                            <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                                <span ng-bind="invoiceDetailsFields.Currency.label"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="curr in currencies">
+                                <div><strong ng-bind="curr.label"></strong></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.language"></label>
+                        <ui-select search-enabled="false" ng-model="invoiceDetailsFields.InvoiceLanguage">
+                            <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                                <span ng-bind="invoiceDetailsFields.InvoiceLanguage.label"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="lang in languages">
+                                <div><strong ng-bind="lang.label"></strong></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label class="section-header">
+                <i class="fa fa-users header-icon"></i>
+                <span translate="registration.form-labels.system-users"></span>
+            </label>
+
+            <label class="section-label section-error-label" translate="registration.form-labels.first-user-error-note" ng-show="users[0].detailsComplete == false && FormSubmissionAttempted"></label>
+            
+            <div ng-repeat="user in users" ng-controller="SystemUserController">
+                    
+                <label class="section-label col-md-6" ng-if="user.number != 1">
+                    <span translate="registration.form-labels.user"></span>
+                    <span>{{user.number}}</span>
+                </label>
+                <label class="section-label col-md-6" ng-if="user.number == 1">
+                    <span translate="registration.form-labels.primary-administrator"></span>
+                </label>
+                
+                <div class="form-group form-group-short col-md-4 col-sm-6 col-xs-12">
+                    <input type="radio" ng-click="selectUserType(user, true)" ng-checked="user.ExistingColtUser == true"></button>
+                    <label class="input-label" translate="registration.form-labels.existing-colt-user"></label>
+
+
+                    <div class="form-group-inner existing-user-group-small-screen" ng-show="user.ExistingColtUser">
+                        <div class="form-group col-md-4 col-sm-3 col-xs-12">
+                            <label class="input-label" translate="registration.form-labels.role"></label>
+                            <span class="mock-form-control" ng-if="user.number == 1" translate="registration.form-labels.full"></span>
+                            <ui-select ng-if="user.number > 1" on-select="selectUserRole(user)" search-enabled="false" ng-model="user.selectedRole" ng-required="user.ExistingColtUser == false">
+                                <ui-select-match>
+                                    <span ng-bind="user.translatedSelectedRoleLabel"></span>
+                                </ui-select-match>
+                                <ui-select-choices class="select-option" repeat="role in userRoles">
+                                    <div><strong translate="{{role.label}}"></strong> </div>
+                                    <small translate="{{role.description}}"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                            <label class="input-label" translate="registration.form-labels.colt-online-id"></label>
+                            <input type="text" ng-max="100" name="UserInfoColtOnlineUserIDAdmin" id="UserInfoColtOnlineUserIDAdmin" ng-model="user.UserInfoColtOnlineUserIDAdmin" class="form-control"  ng-required="user.ExistingColtUser == true"/>
+                        </div>
+                        <div class="col-md-6 col-sm-4 col-xs-12">
+                            <label class="input-label" translate="registration.form-labels.email"></label>
+                            <input type="text" ng-max="100" name="UserInfoEmail" id="UserInfoEmail" ng-pattern="emailRegExp" ng-model="user.UserInfoEmail" class="form-control"  ng-required="user.ExistingColtUser == true"/>
+                        </div>                       
+                        <hr class="section-partition">
+                    </div>
+                </div>
+                <div class="form-group form-group-short col-md-4 col-sm-6 col-xs-12">
+                    <input type="radio" ng-click="selectUserType(user, false)" ng-checked="user.ExistingColtUser == false"></button>
+                    <label class="input-label" translate="registration.form-labels.new-colt-user"></label>
+                </div> 
+
+                <div class="existing-user-group-large-screen" ng-if="user.ExistingColtUser">
+                    <div class="form-group col-md-4 col-sm-4 col-xs-6">
+                        <label class="input-label" translate="registration.form-labels.role"></label>
+                        <span class="mock-form-control" ng-if="user.number == 1" translate="registration.form-labels.full"></span>
+                        <ui-select ng-if="user.number > 1" on-select="selectUserRole(user)" search-enabled="false" ng-model="user.selectedRole" ng-required="user.ExistingColtUser == false">
+                            <ui-select-match>
+                                <span ng-bind="user.translatedSelectedRoleLabel"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="role in userRoles">
+                                <div><strong translate="{{role.label}}"></strong> </div>
+                                <small translate="{{role.description}}"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.colt-online-id"></label>
+                        <input type="text" ng-max="100" name="UserInfoColtOnlineUserIDAdmin" id="UserInfoColtOnlineUserIDAdmin" ng-model="user.UserInfoColtOnlineUserIDAdmin" class="form-control" ng-required="user.ExistingColtUser == true"/>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.email"></label>
+                        <input type="text" ng-max="100" name="UserInfoEmail" id="UserInfoEmail" ng-pattern="emailRegExp" ng-model="user.UserInfoEmail" class="form-control"  ng-required="user.ExistingColtUser == true"/>
+                    </div>
+                </div>
+
+                <div ng-if="!user.ExistingColtUser && user.ExistingColtUser != null" class="form-group-narrow">
+                    <div class="form-group col-md-3 col-sm-3 col-xs-6">
+                        <label class="input-label" translate="registration.form-labels.role"></label>
+                        <span class="mock-form-control" ng-if="user.number == 1" translate="registration.form-labels.full"></span>
+                        <ui-select ng-if="user.number > 1" on-select="selectUserRole(user)" search-enabled="false" ng-model="user.selectedRole" ng-required="user.ExistingColtUser == false">
+                            <ui-select-match>
+                                <span ng-bind="user.translatedSelectedRoleLabel"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="role in userRoles">
+                                <div><strong translate="{{role.label}}"></strong> </div>
+                                <small translate="{{role.description}}"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="form-group col-md-3 col-sm-3 col-xs-6">
+                        <label class="input-label" translate="registration.form-labels.title"></label>
+                        <ui-select on-select="selectUserTitle(user)" search-enabled="false" ng-model="user.UserInfoTitle" ng-required="user.ExistingColtUser == false">
+                            <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                                <span ng-bind="user.translatedUserInfoTitleLabel"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="title in titles">
+                                <div><strong translate="{{title.label}}"></strong></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.full-name"></label>
+                        <input type="text" ng-max="100" name="UserInfoFullNameAdmin" id="UserInfoFullNameAdmin" ng-pattern="fullNameRegExp" ng-model="user.UserInfoFullNameAdmin" ng-required="user.ExistingColtUser == false" class="form-control" placeholder="{{'registration.form-labels.firstname-surname' | translate}}"/>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.tel"></label>
+                        <input type="text" ng-max="100" name="UserInfoTelephone" id="UserInfoTelephone" ng-pattern="phoneNumRegExp" ng-required="user.ExistingColtUser == false" ng-model="user.UserInfoTelephone" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.email"></label>
+                        <input type="text" ng-max="100" name="UserInfoEmail" id="UserInfoEmail" ng-pattern="emailRegExp" ng-model="user.UserInfoEmail" class="form-control"  ng-required="user.ExistingColtUser == false"/>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                        <label class="input-label" translate="registration.form-labels.colt-online-portal-display-language"></label>
+                        <ui-select search-enabled="false" ng-model="user.UserColtOnlinePortalDisplayLanguage" ng-required="user.ExistingColtUser == false">
+                            <ui-select-match placeholder="{{'registration.form-labels.please-select' | translate}}">
+                                <span ng-bind="user.UserColtOnlinePortalDisplayLanguage.label"></span>
+                            </ui-select-match>
+                            <ui-select-choices class="select-option" repeat="lang in languages">
+                                <div><strong ng-bind="lang.label"></strong></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                
+                <button ng-if="user.number != 1" type="button" class="btn-default btn btn-remove-user" translate="registration.form-labels.remove-user" ng-click="removeUser(user);"></button>
+                <hr class="section-partition">
+            </div>
+            <button type="button" class="btn-default btn btn-add-user" translate="registration.form-labels.add-another-user" ng-click="addUser();" ng-disabled="users.length > 4 || users[users.length - 1].detailsComplete == false"></button>
+            
+        </div>
+        <div class="form-section">
+            <label class="section-label cold-md-6" translate="registration.form-labels.legal-notice-header"></label>
+
+            <label class="section-label section-error-label" translate="registration.form-labels.legal-notice-error-note" ng-show="!LegalNoticeAccepted && FormSubmissionAttempted"></label>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                <input class="notice-acceptance-input" type="checkbox" value="true" name="LegalNoticeAccepted" ng-model="LegalNoticeAccepted" required />
+                <span class="notice-acceptance-p" translate="registration.form-labels.legal-notice-acceptance"></span>
+                <button type="button" ng-click="showFormModal('privacy-link')" class="notice-acceptance-link btn-link" translate="registration.form-labels.legal-notice-link"></button>
+            </p>
+        </div>
+        <div class="form-section form-final-section">
+            <button type="submit" class="btn-primary btn btn-large btn-submit" translate="registration.form-labels.submit-form" ng-disabled="registrationForm.$invalid" ng-click="processForm(registrationForm, 'submit')"></button>
+            <button type="button" class="btn-default btn btn-large btn-submit" translate="registration.form-labels.save-form" ng-click="processForm(registrationForm, 'save')"></button>  
+        </div>
+    </form>
+</div>

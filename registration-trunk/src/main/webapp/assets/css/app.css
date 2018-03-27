@@ -1,0 +1,658 @@
+/*
+ * Base structure
+ */
+/* Global Elements */
+/*Converting CSS3 for cross-browser*/
+/*HTML Structural elements*/
+/*Colt Color Branding Options*/
+/* Colt Elements could be used globally */
+body {
+  background-color: #f5f5f5; }
+
+a {
+  color: #00695f; }
+  a:focus, a:hover {
+    color: #00695f; }
+
+input, button, .panel, .modal-content, select {
+  border-radius: 0 !important; }
+
+.fade-trans {
+  opacity: 0;
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  transition: opacity 0.6s; }
+
+.fade-trans.trans-show {
+  opacity: 1; }
+
+.logo-container {
+  float: none;
+  max-width: 1200px;
+  display: block;
+  margin: 0 auto;
+  color: #fff;
+  z-index: 1;
+  position: relative;
+  padding: 10px 0 20px;
+  width: calc(100% - 30px); }
+  .logo-container .sidebar-logo {
+    margin: 0;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #fff; }
+  .logo-container img {
+    float: right;
+    margin-right: 60px; }
+  .logo-container .logo-title,
+  .logo-container h2 {
+    float: left;
+    clear: both; }
+  .logo-container .logo-title {
+    margin-top: 10px;
+    width: 100%;
+    padding-bottom: 20px; }
+  .logo-container h2 {
+    margin-top: 50px; }
+
+.expandable-section-container .expandable-section {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  float: left;
+  width: 100%;
+  -webkit-transition: max-height 0.4s;
+  -moz-transition: max-height 0.4s;
+  -o-transition: max-height 0.4s;
+  transition: max-height 0.4s; }
+  .expandable-section-container .expandable-section.open {
+    max-height: 5000px;
+    padding-top: inherit;
+    padding-bottom: inherit;
+    overflow: visible; }
+  .expandable-section-container .expandable-section .expandable-section-nav {
+    float: left;
+    width: 100%;
+    background: #f2f2f2;
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 10px; }
+    .expandable-section-container .expandable-section .expandable-section-nav button {
+      margin-left: 10px; }
+
+.expandable-section-container .open-button {
+  position: absolute;
+  right: 0;
+  border-left: 1px solid #488cc6;
+  top: 0;
+  height: 54px;
+  background: #3877ad;
+  padding: 20px 25px 0 25px; }
+
+button.btn-primary {
+  border-color: #008b81;
+  background-color: #008b81; }
+  button.btn-primary:hover, button.btn-primary:active, button.btn-primary:focus, button.btn-primary:active:focus, button.btn-primary:active:hover {
+    border-color: #1d754f;
+    background-color: #008b81; }
+
+button.btn-link {
+  background: none;
+  border: none;
+  font-weight: bold; }
+
+.footer {
+  float: left;
+  clear: both;
+  width: 100%;
+  margin-top: 25px;
+  padding: 20px 10px; }
+
+/* Media query for header breaking point*/
+@media (max-width: 1180px) {
+  #main-menu .hide-menu-text {
+    display: none; } }
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 15px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0; }
+
+.navbar-header a {
+  padding-top: 1.1em; }
+
+#headerNavigation {
+  background: transparent !important; }
+
+.navbar-nav > li > a {
+  padding-bottom: 0; }
+
+#globalSearch {
+  position: relative;
+  top: 0.1em; }
+
+.navbar-brand {
+  font-size: 1.5em;
+  padding-top: 16px; }
+
+.navbar-brand:focus,
+.navbar-brand:hover {
+  color: #999 !important; }
+
+.request-dropdown-menu {
+  left: -8em;
+  right: 0;
+  width: 180px; }
+
+#secondary-navigation-button {
+  background: transparent;
+  color: white; }
+
+#main-menu {
+  position: relative;
+  bottom: 0.4em; }
+
+#main-menu li .fa {
+  position: relative;
+  top: 0.15em;
+  margin-right: 0.15em; }
+
+/*
+ * Main content
+ */
+.lightbox {
+  text-align: center;
+  min-height: 500px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(240, 240, 240, 0.6);
+  color: #00695f; }
+
+.lightbox i {
+  top: 45%;
+  position: absolute;
+  left: calc(50% - 36px); }
+
+#mainContainer {
+  padding: 0 1em;
+  margin-top: 1em;
+  background: transparent;
+  overflow: auto;
+  width: 100%;
+  min-height: 600px; }
+
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.panel-body table {
+  max-height: 200px; }
+
+.panel-heading .fa,
+.page-header .fa {
+  padding-right: 0.5em; }
+
+#breadcrumbs {
+  padding: 0.5em;
+  overflow: hidden;
+  border: 1px solid #eee;
+  margin: 0 1em; }
+
+/* Individual Pages */
+.hero-img.registration-hero-img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 600px;
+  background: url("../../assets/images/colt-header.jpg") center 0 no-repeat;
+  background-size: cover; }
+
+.hero-img .hero-img-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.7); }
+
+.registration-page .logo-container .logo-title {
+  height: 0; }
+
+.registration-page .lang-select {
+  position: absolute;
+  min-width: 23px;
+  right: 0;
+  top: 33px;
+  font-size: 18px; }
+  .registration-page .lang-select .label {
+    float: left;
+    margin-top: 6px;
+    margin-right: 15px; }
+  .registration-page .lang-select #language-toolbar-button {
+    background: none;
+    padding-right: 0;
+    top: -9px; }
+    .registration-page .lang-select #language-toolbar-button:hover, .registration-page .lang-select #language-toolbar-button:focus, .registration-page .lang-select #language-toolbar-button.focus, .registration-page .lang-select #language-toolbar-button.active, .registration-page .lang-select #language-toolbar-button:active {
+      color: #bbb; }
+  .registration-page .lang-select .dropdown-menu {
+    right: 0;
+    left: auto;
+    background: #fff; }
+
+.registration-page .sub-heading,
+.registration-page .parag-2 {
+  float: left;
+  clear: left;
+  margin-top: 10px; }
+
+.registration-page .sub-heading {
+  font-weight: bold; }
+
+.registration-page .registration-container {
+  padding: 0;
+  max-width: 1200px;
+  float: none;
+  margin: 0 auto; }
+  .registration-page .registration-container .glyphicon {
+    margin-right: 10px; }
+  .registration-page .registration-container .form-intro {
+    margin-top: 30px;
+    text-shadow: 1px 1px 1px #000; }
+    .registration-page .registration-container .form-intro.form-intro-error {
+      color: #621d1d;
+      background: rgba(240, 210, 209, 0.8);
+      padding: 14px 10px 5px;
+      text-shadow: none;
+      border-radius: 4px; }
+  .registration-page .registration-container form {
+    box-shadow: 1px 2px 3px #ddd;
+    border-color: #9ea5c9;
+    border-top-color: #8890bf; }
+    .registration-page .registration-container form .form-intro {
+      margin-top: 30px;
+      text-shadow: 1px 2px 1px #0f321e;
+      background: rgba(196, 245, 202, 0.3);
+      padding: 30px 30px 20px;
+      border-radius: 4px;
+      border: 1px solid #577464;
+      line-height: 35px; }
+    .registration-page .registration-container form .form-section.form-final-section {
+      padding-bottom: 0;
+      padding-right: 5px; }
+    .registration-page .registration-container form .form-section .section-header i.header-icon {
+      border-right-color: #2d8453;
+      padding-right: 20px; }
+    .registration-page .registration-container form .form-section .section-header span {
+      margin-left: 40px; }
+    .registration-page .registration-container form .form-section .form-group.ocn-exists-group {
+      margin-top: 33px; }
+    .registration-page .registration-container form .form-section .form-group.form-group-short .input-label {
+      width: calc(100% - 45px); }
+    .registration-page .registration-container form .form-section .form-group.form-group-short input[type="text"] {
+      margin-top: -7px; }
+    .registration-page .registration-container form .form-section .form-group .form-group-inner {
+      float: left;
+      width: 100%;
+      padding: 15px 10px 5px; }
+    .registration-page .registration-container form .form-group-narrow {
+      float: left;
+      width: 100%;
+      padding-left: 25px;
+      padding-right: 25px; }
+    .registration-page .registration-container form .existing-user-group-large-screen {
+      clear: both; }
+    .registration-page .registration-container form .notice-acceptance-p {
+      float: left;
+      max-width: calc(100% - 40px); }
+    .registration-page .registration-container form .notice-acceptance-input {
+      float: left;
+      margin-top: 1px;
+      width: 18px; }
+    .registration-page .registration-container form .btn-link {
+      color: #00695f;
+      margin-left: 50px; }
+    .registration-page .registration-container form .btn-submit {
+      float: right;
+      margin: 10px 5px 0 5px; }
+    .registration-page .registration-container form .expandable-section-container .section-header {
+      margin-bottom: 0; }
+
+.registration-page .btn-remove-user {
+  float: right;
+  margin-right: 15px;
+  margin-top: 10px; }
+
+.registration-page .btn-add-user {
+  float: right;
+  margin-right: 15px;
+  clear: both; }
+
+.registration-page .modal-header {
+  color: #eee;
+  background-color: #008b81; }
+
+.registration-page .footer {
+  background-color: #008b81; }
+
+.word-break {
+  /* Warning: Needed for oldIE support, but words are broken up letter-by-letter */
+  -ms-word-break: break-all;
+  word-break: break-all;
+  /* Non standard for webkit */
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; }
+
+.label-success,
+.notifications .success {
+  background-color: #5cb85c; }
+
+.label-warning,
+.notifications .warning {
+  background-color: #df8a13; }
+
+.label-danger,
+.notifications .error {
+  background-color: #b52b27; }
+
+.label-info {
+  background-color: #28a1c5; }
+
+/* FORM ELEMENTS - _forms.scss */
+.form-intro {
+  color: #eee;
+  font-size: 15px;
+  margin-bottom: 45px;
+  font-weight: bold; }
+
+form {
+  border: 1px solid #dae3dc;
+  display: table;
+  background-color: #fff;
+  /*Inside Forms*/ }
+  form.full-page {
+    width: 100%;
+    max-width: 1200px; }
+  form.center {
+    float: none;
+    margin: 0 auto; }
+  form .form-section {
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #c0ddce;
+    padding-bottom: 10px; }
+    form .form-section.form-final-section {
+      border-top: 1px dotted #c7c7c7;
+      border-bottom: none; }
+    form .form-section.form-section-fixed {
+      position: fixed; }
+      form .form-section.form-section-fixed.form-section-fixed-bottom-right {
+        bottom: 10px;
+        right: 10px;
+        left: auto;
+        top: auto;
+        background: rgba(210, 210, 210, 0.7);
+        width: auto;
+        padding: 0 10px 10px;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px; }
+    form .form-section > p {
+      margin: 15px 30px;
+      float: left;
+      clear: left;
+      color: #677b92;
+      line-height: 30px;
+      width: calc(100% - 60px); }
+    form .form-section input[type="radio"] {
+      float: left;
+      margin-right: 20px;
+      margin-top: 0; }
+    form .form-section input[type="checkbox"] {
+      float: left;
+      margin-right: 20px;
+      margin-top: 0; }
+  form .section-header,
+  form .section-label {
+    float: left;
+    width: 100%; }
+  form .section-header {
+    font-size: 17px;
+    padding: 15px;
+    background-color: #008b81;
+    color: #fff;
+    border: 1px solid #5f8d66;
+    border-bottom-color: #0c4b3b;
+    border-left: none;
+    border-right: none;
+    position: relative; }
+    form .section-header i.header-icon {
+      float: left;
+      height: 28px;
+      position: absolute;
+      padding-top: 4px;
+      left: 18px;
+      width: 35px; }
+    form .section-header span {
+      float: left;
+      margin-left: 40px; }
+  form .section-label {
+    color: #00695f;
+    padding: 10px 15px 0;
+    margin: 5px 0 0;
+    font-weight: bold; }
+    form .section-label.section-error-label {
+      color: #b05050; }
+  form hr.section-partition {
+    float: left;
+    width: calc(100% - 30px);
+    border-top: 1px dotted #cbd1cc;
+    margin: 10px 15px 10px; }
+  form .form-group {
+    padding: 10px 15px;
+    margin-bottom: 0; }
+    form .form-group.form-group-short {
+      padding-bottom: 0;
+      padding-top: 15px; }
+  form .input-label {
+    margin-bottom: 10px;
+    color: #00695f;
+    font-weight: normal;
+    float: left; }
+  form .form-group-short .input-label {
+    width: auto;
+    padding: 0; }
+  form .form-control {
+    -webkit-appearace: none;
+    -moz-webkit-appearance: none;
+    box-shadow: none;
+    background: #fff;
+    border-color: #bcc6be;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px; }
+    form .form-control.ng-invalid.ng-not-empty {
+      border-color: #ce8686;
+      background: #f6eded;
+      color: #c56666; }
+  form .mock-form-control {
+    float: left;
+    width: 100%;
+    border: 1px solid #cbcfcc;
+    padding: 6px 10px;
+    background: #eee;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px; }
+  form .ui-select-container .ui-select-placeholder {
+    float: left; }
+  form .ui-select-container .ui-select-toggle i.caret {
+    color: #4db97a;
+    position: absolute;
+    right: 10px;
+    bottom: 15px; }
+  form .ui-select-container .dropdown-menu {
+    top: 65px !important;
+    right: -15px;
+    width: 100%;
+    padding: 10px 15px; }
+  form .ui-select-container .ui-select-focusser,
+  form .ui-select-container .ui-select-search {
+    display: none; }
+  form .ui-select-container .ui-select-choices-row {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #759b8b;
+    padding-bottom: 10px;
+    color: #8d8d8d; }
+    form .ui-select-container .ui-select-choices-row:hover {
+      cursor: pointer;
+      color: #6c6969; }
+  form .ui-select-container .ui-select-choices-row-inner strong {
+    color: #296327;
+    font-weight: normal; }
+  form .ui-select-container .ui-select-choices-row-inner:hover strong {
+    color: #458143;
+    font-weight: bold; }
+  form .btn-primary {
+    background-color: #00695f;
+    border: 1px solid #116634;
+    padding: 7px 15px; }
+    form .btn-primary:hover, form .btn-primary:active, form .btn-primary:focus, form .btn-primary:active:focus, form .btn-primary:active:hover {
+      border-color: #1d754f;
+      background-color: #008b81; }
+    form .btn-primary:active, form .btn-primary:focus, form .btn-primary:active:focus, form .btn-primary:active:hover {
+      outline: 5px auto #00d7c9; }
+    form .btn-primary.disabled, form .btn-primary.disabled.active, form .btn-primary.disabled.focus, form .btn-primary.disabled:active, form .btn-primary.disabled:focus, form .btn-primary.disabled:hover, form .btn-primary[disabled], form .btn-primary[disabled].active, form .btn-primary[disabled].focus, form .btn-primary[disabled]:active, form .btn-primary[disabled]:focus, form .btn-primary[disabled]:hover {
+      background-color: #007169;
+      cursor: not-allowed;
+      filter: alpha(opacity=65);
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      opacity: .65; }
+  form fieldset[disabled] .btn-primary {
+    background-color: #00695f;
+    border: 1px solid #335f3e;
+    padding: 7px 15px; }
+    form fieldset[disabled] .btn-primary:hover, form fieldset[disabled] .btn-primary:active, form fieldset[disabled] .btn-primary:focus, form fieldset[disabled] .btn-primary:active:focus, form fieldset[disabled] .btn-primary:active:hover {
+      border: 1px solid #155730;
+      background-color: #00695f; }
+    form fieldset[disabled] .btn-primary:active, form fieldset[disabled] .btn-primary:focus, form fieldset[disabled] .btn-primary:active:focus, form fieldset[disabled] .btn-primary:active:hover {
+      outline: 5px auto #00d7c9; }
+    form fieldset[disabled] .btn-primary.disabled, form fieldset[disabled] .btn-primary.disabled.active, form fieldset[disabled] .btn-primary.disabled.focus, form fieldset[disabled] .btn-primary.disabled:active, form fieldset[disabled] .btn-primary.disabled:focus, form fieldset[disabled] .btn-primary.disabled:hover, form fieldset[disabled] .btn-primary[disabled], form fieldset[disabled] .btn-primary[disabled].active, form fieldset[disabled] .btn-primary[disabled].focus, form fieldset[disabled] .btn-primary[disabled]:active, form fieldset[disabled] .btn-primary[disabled]:focus, form fieldset[disabled] .btn-primary[disabled]:hover, form fieldset[disabled] .btn-primary.active, form fieldset[disabled] .btn-primary.btn-primary.focus, form fieldset[disabled] .btn-primary:active, form fieldset[disabled] .btn-primary:focus, form fieldset[disabled] .btn-primary:hover {
+      background-color: #00695f; }
+  form .open > .dropdown-toggle.btn-default {
+    color: white;
+    background-color: #737373;
+    border-color: #808080; }
+    form .open > .dropdown-toggle.btn-default.focus, form .open > .dropdown-toggle.btn-default:focus, form .open > .dropdown-toggle.btn-default:hover {
+      color: white;
+      background-color: #5a5a5a;
+      border-color: #808080; }
+  form .secondary-button {
+    background: gray;
+    color: white; }
+    form .secondary-button:hover {
+      color: white;
+      background-color: #737373;
+      border-color: #808080; }
+  form.form-submission-attempted .ng-invalid-required:not(.ui-select-container),
+  form.form-submission-attempted .ng-invalid-required .ui-select-toggle {
+    border-color: #ce8686;
+    background: #f6eded;
+    color: #c56666; }
+  form .input-group-addon {
+    background-color: #007169;
+    color: white; }
+  form .label-primary {
+    background-color: #00695f;
+    opacity: 0.8; }
+  form .primary-theme {
+    background-color: #007169;
+    color: white; }
+  form .primary-theme-footer {
+    border-top: 2px solid #007169; }
+  form .validate-input.ng-invalid.ng-dirty,
+  form .validate-input.ng-invalid.ng-touched {
+    border: 1px solid #c82d2d !important; }
+  form .highlight-brown {
+    color: #8c2d2d;
+    font-size: 80%;
+    font-weight: bold; }
+  form .field-has-error {
+    border: 1px solid red !important; }
+  form .field-has-error:focus {
+    border: 1px solid red !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 5px red;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 5px red; }
+  form .field-has-success {
+    border: 1px solid #5cb85c; }
+  form .field-has-success:focus {
+    border: 1px solid #5cb85c;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 5px #5cb85c;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 5px #5cb85c; }
+  form .field-error {
+    float: left;
+    width: 100%;
+    margin: -1px 0 3px;
+    color: #c34343;
+    font-size: 0.85em;
+    border: 1px solid #d4abab;
+    border-top: none;
+    padding: 5px 10px; }
+  form .field-success {
+    color: #5cb85c; }
+  form .status-active {
+    color: #007169; }
+  form .status-disabled {
+    color: gray; }
+  form .status-deactivated {
+    color: black; }
+  form .status-locked {
+    color: #b52b27; }
+
+@media only screen and (max-width: 52rem) {
+  form .form-group .existing-user-group-small-screen {
+    display: block;
+    margin-top: -15px; }
+  form .existing-user-group-large-screen {
+    display: none; } }
+
+@media only screen and (min-width: 52rem) {
+  .hero-img.registration-hero-img {
+    background: url("../images/colt-header.jpg") center 100% no-repeat; }
+  form .form-group .existing-user-group-small-screen {
+    display: none; } }
+
+@media only screen and (max-width: 72rem) {
+  .registration-page .registration-container form .form-section .form-group.form-group-short.ocn-exists-group {
+    margin-top: 0 !important; }
+  .ocn-input-container {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 0; } }
+
+@media only screen and (min-width: 77rem) {
+  .registration-page .lang-select #language-toolbar-button {
+    top: -1px; }
+  .registration-page .registration-container form .form-section .form-group .form-group-inner {
+    padding-left: 0;
+    padding-right: 0; } }
+
+@media only screen and (max-width: 87rem) {
+  .registration-page .registration-container form .btn-link {
+    margin-left: 30px;
+    margin-top: 10px; } }

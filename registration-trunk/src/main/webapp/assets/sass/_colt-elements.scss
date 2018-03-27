@@ -1,0 +1,134 @@
+body {
+    background-color: #f5f5f5;
+}
+
+a {
+    color: #00695f;
+
+    &:focus,
+    &:hover {
+        color: #00695f;
+    }
+}
+
+input, button, .panel, .modal-content, select {
+    border-radius: 0 !important;
+}
+
+.fade-trans {
+    opacity: 0;
+    @include css-trans(opacity 0.6s);
+}
+.fade-trans.trans-show {
+    opacity: 1;
+}
+
+.logo-container {
+    float: none;
+    max-width: 1200px;
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    z-index: 1;
+    position: relative;
+    padding: 10px 0 20px;
+    width: calc(100% - 30px);
+
+    & .sidebar-logo {
+        margin: 0;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #fff;
+    }
+
+    & img {
+        float: right;
+        margin-right: 60px;
+    }
+
+    & .logo-title,
+    & h2 {
+        @include elem-force-left;
+    }
+
+    & .logo-title {
+        margin-top: 10px;
+        width: 100%;
+        padding-bottom: 20px;
+    }
+
+    & h2 {
+        margin-top: 50px;
+    }
+}
+
+.expandable-section-container {
+
+    & .expandable-section {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        @include left-full-width;
+        @include css-trans(max-height 0.4s);
+
+        &.open {
+            max-height: 5000px;
+            padding-top: inherit;
+            padding-bottom: inherit;
+            overflow: visible;
+        }
+
+        & .expandable-section-nav {
+            float: left;
+            width: 100%;
+            background: #f2f2f2;
+            padding: 10px;
+            text-align: right;
+            border-top: 1px solid #e7e7e7;
+            margin-top: 10px;
+
+            & button {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    & .open-button {
+        position: absolute;
+        right: 0;
+        border-left: 1px solid #488cc6;
+        top: 0;
+        height: 54px;
+        background: #3877ad;
+        padding: 20px 25px 0 25px;
+    }
+}
+
+button {
+    &.btn-primary {
+        border-color: #008b81;
+        @include colt-light-green-bg;
+
+        &:hover,
+        &:active,
+        &:focus,
+        &:active:focus,
+        &:active:hover {
+          border-color: #1d754f;
+          @include colt-light-green-bg;
+        }
+    }
+    &.btn-link {
+        background: none;
+        border: none;
+        font-weight: bold;
+    }
+}
+
+.footer {
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-top: 25px;
+    padding: 20px 10px;
+}
