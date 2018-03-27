@@ -1,0 +1,280 @@
+[
+    {
+        "serverName": "local",
+        "hostname": "localhost",
+        "servers": [
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8080
+            },
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8080
+            },
+            {
+                "name": "sdwan",
+                "path": "/sdwan/api/v1/portal",
+                "redirectionPath": "/sdwan-portal-api",
+                "contextPath": "/sdwan",
+                "port": 8080
+            },
+            {
+                "name": "sdwan-admin",
+                "path": "/sdwan/api/v1/admin",
+                "redirectionPath": "/sdwan-admin-api",
+                "contextPath": "/sdwan-admin",
+                "port": 8080
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8080
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8080
+            }
+        ]
+    },
+    {
+        "serverName": "dev",
+        "hostname": "amsnov02",
+        "servers": [
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8080
+            },
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8080
+            },
+            {
+                "name": "sdwan",
+                "path": "/sdwan",
+                "contextPath": "/sdwan",
+                "port": 8080
+            },
+            {
+                "name": "sdwan-admin",
+                "path": "/sdwan/api/v1/admin",
+                "contextPath": "/sdwan-admin",
+                "port": 8080
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8080
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8080
+            }
+        ]
+    },
+    {
+        "serverName": "qa",
+        "hostname": "amsnov03",
+        "servers": [
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8330
+            },
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8230
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8230
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8230
+            }
+        ]
+    },
+    {
+        "serverName": "sit",
+        "hostname": "amsnov05",
+        "servers": [
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8330
+            },
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8230
+            },
+            {
+                "name": "sdwan",
+                "path": "/sdwan/api/v1/portal",
+                "contextPath": "/sdwan",
+                "port": 8230
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8230
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8230
+            }
+        ]
+    },
+    {
+        "serverName": "internal",
+        "hostname": "amsnov07",
+        "servers": [
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8080
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8080
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8080
+            }
+        ]
+    },
+    {
+        "serverName": "external",
+        "hostname": "amsnov08",
+        "servers": [
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8230
+            },
+           {
+                "name": "sdwan",
+                "path": "/sdwan/api/v1/portal",
+                "contextPath": "/sdwan",
+                "port": 8230
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8230
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8230
+            }
+        ]
+    },
+    {
+        "serverName": "rfs",
+        "hostname": "rfsnovitas.internal.colt.net",
+        "servers": [
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8330
+            },
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8230
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8230
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8230
+            }
+        ]
+    },
+    {
+        "serverName": "trial",
+        "hostname": "trial.sdvpn.colt.net",
+        "servers": [
+            {
+                "name": "sdwan",
+                "path": "/sdwan/api/v1/portal",
+                "redirectionPath": "/api/v1/portal",
+                "contextPath": "/sdwan",
+                "port": 443
+            }
+        ]
+    },
+    {
+        "serverName": "prod",
+        "hostname": "novitas.internal.colt.net",
+        "servers": [
+            {
+                "name": "portal",
+                "path": "/",
+                "port": 8230
+            },
+            {
+                "name": "admin",
+                "path": "/admin-api",
+                "contextPath": "/admin",
+                "port": 8330
+            },
+            {
+                "name": "sdwan",
+                "path": "/sdwan/api/v1/portal",
+                "redirectionPath": "/sdwan/api/v1/portal",
+                "contextPath": "/sdwan",
+                "port": 8230
+            },
+            {
+                "name": "registration",
+                "path": "/api/registration",
+                "contextPath": "/registration",
+                "port": 8230
+            },
+            {
+                "name": "installer",
+                "path": "/sdwan/api/v1/installer",
+                "contextPath": "/installer",
+                "port": 8230
+            }
+        ]
+    }
+]
